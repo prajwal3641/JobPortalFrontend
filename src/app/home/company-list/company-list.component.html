@@ -1,0 +1,23 @@
+<div class="mt-20 pb-5">
+  <div class="text-5xl text-center mb-10 font-semibold text-[#e7e7e7]">
+    Trusted By <span class="text-[#ffbd20]">1000+</span> Companies
+  </div>
+
+  <div class="flex justify-center">
+    <!-- Marquee with width 90%-->
+    <div class="w-[90%] overflow-hidden mt-7 bg-[#2d2d2d]">
+      <div class="marquee-track flex gap-6 px-2 py-1 bg-[#2d2d2d]">
+        @for(company of companies.concat(companies);track company.name){
+        <div class="px-4 hover:bg-[#454545] rounded-xl cursor-pointer">
+          <img
+            class="h-20 object-cover hover:scale-105 transition-transform duration-300"
+            [src]="`../../../assets/Companies/${company.name}.png`"
+            alt="`${company.name} logo`"
+          />
+        </div>
+
+        }
+      </div>
+    </div>
+  </div>
+</div>

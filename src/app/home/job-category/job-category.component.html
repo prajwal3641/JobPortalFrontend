@@ -1,0 +1,41 @@
+<div class="mt-20 pb-5">
+  <div class="text-5xl text-center mb-5 font-semibold text-[#e7e7e7]">
+    Browse <span class="text-[#ffbd20]">Job</span> Category
+  </div>
+  <div class="text-lg w-1/2 m-auto mb-8 text-[#b0b0b0] text-center">
+    Explore diverse job opportunities tailored to your skills. Start your carrer
+    journey today!
+  </div>
+
+  <!-- Carousel Container -->
+  <div class="relative group flex justify-center w-full">
+    <div class="relative w-[90%]">
+      <owl-carousel-o [options]="customOptions">
+        @for(category of categories; track category.name) {
+        <ng-template carouselSlide>
+          <div
+            class="flex flex-col mx-auto gap-2 border border-[#ffbd20] rounded-lg p-5 items-center w-64 hover:cursor-pointer hover:shadow-[0_0_5px_2px_black] !shadow-[#ffbd20] my-5 transition ease-in duration-200"
+          >
+            <div class="p-2 bg-[#ffd149] rounded-full">
+              <img
+                class="h-8 w-8"
+                [src]="`assets/Category/${category.name}.png`"
+                alt="{{ category.name }} icon"
+              />
+            </div>
+            <div class="text-[#e7e7e7] text-xl font-semibold">
+              {{ category.name }}
+            </div>
+            <div class="text-sm text-center text-[#b0b0b0]">
+              {{ category.desc }}
+            </div>
+            <div class="text-[#ffd149] text-lg">
+              {{ category.jobs }}+ new job posted
+            </div>
+          </div>
+        </ng-template>
+        }
+      </owl-carousel-o>
+    </div>
+  </div>
+</div>

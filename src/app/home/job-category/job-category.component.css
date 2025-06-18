@@ -1,0 +1,20 @@
+::ng-deep .custom-nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #ffd149;
+  color: #000;
+  font-size: 2rem;
+  padding: 0.75rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  z-index: 50;
+}
+
+::ng-deep .left-arrow {
+  left: -3rem;
+}
+
+::ng-deep .right-arrow {
+  right: -3rem;
+}
