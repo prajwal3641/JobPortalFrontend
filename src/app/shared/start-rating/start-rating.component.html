@@ -1,0 +1,18 @@
+<div class="relative inline-block text-xl leading-none">
+  <!-- Empty stars (gray) -->
+  <div class="flex text-gray-400">
+    @for (_ of stars(); track $index) {
+    <span>★</span>
+    }
+  </div>
+
+  <!-- Filled stars (yellow), clipped to percentage -->
+  <div
+    class="absolute top-0 left-0 flex text-[#ffd149] overflow-hidden pointer-events-none"
+    [style.width]="percent()"
+  >
+    @for (_ of stars(); track $index) {
+    <span>★</span>
+    }
+  </div>
+</div>

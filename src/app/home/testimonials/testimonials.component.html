@@ -3,17 +3,31 @@
     What <span class="text-[#ffbd20]">User</span> says about us?
   </div>
 
-  <!-- main div -->
-  <div>
-    <!-- left section -->
-    <div class="flex gap-2 items-center">
-      <img
-        src="assets/avatar.png"
-        alt="Profile"
-        class="w-14 h-14 rounded-full object-cover border-2 border-[#ffbd20]"
-      />
-      <div class="text-lg text-[#f6f6f6] font-semibold">Prajwal Rode</div>
-      <div></div>
+  <!-- Testimonials card div enclosing -->
+  <div class="flex justify-evenly">
+    <!-- testimonials cards -->
+    @for(testimonial of testimonials;track testimonial.name){
+    <!-- card div -->
+    <div
+      class="flex flex-col gap-3 w-[23%] border border-[#ffbd20] p-3 rounded-xl mt-10"
+    >
+      <div class="flex gap-2 items-center">
+        <img
+          src="assets/avatar.png"
+          alt="Profile"
+          class="w-14 h-14 rounded-full object-cover border-2 border-[#ffbd20]"
+        />
+        <div>
+          <div class="text-lg text-[#f6f6f6] font-semibold">
+            {{ testimonial.name }}
+          </div>
+          <app-star-rating [rating]="testimonial.rating" [max]="5" />
+        </div>
+      </div>
+      <div class="text-xs text-[#b0b0b0]">
+        {{ testimonial.testimonial }}
+      </div>
     </div>
+    }
   </div>
 </div>
