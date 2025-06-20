@@ -1,4 +1,52 @@
-<div class="flex bg-[#ffbd20] m-auto justify-around gap-4 w-[50%]">
-  <div>Welcome to Job Portal</div>
-  <div>Prajwal</div>
+<div class="mt-20 pb-5">
+  <!-- TItle and info -->
+  <div class="text-5xl text-center mb-5 font-semibold text-[#e7e7e7]">
+    How it <span class="text-[#ffbd20]">Works</span>
+  </div>
+  <div class="text-lg w-1/2 m-auto mb-8 text-[#b0b0b0] text-center">
+    Efforlessly navigate through the process and land your dream job.
+  </div>
+
+  <!-- main div -->
+  <div class="flex justify-around items-center">
+    <!-- left section (image) -->
+    <div class="relative">
+      <img class="w-[30rem]" src="assets/Working/Girl.png" alt="girl image" />
+      <div
+        class="absolute top-[15%] right-[0%] w-36 flex flex-col gap-1 items-center border border-[#ffbd20] rounded-xl py-3 px-1 backdrop-blur-md"
+      >
+        <img
+          src="assets/avatar1.png"
+          alt="Profile"
+          class="w-16 h-16 rounded-full object-cover border-2 border-[#584940]"
+        />
+        <div class="text-sm font-semibold text-[#d1d1d1] text-center">
+          Complete your profile
+        </div>
+        <div class="text-xs text-[#b0b0b0]">70% Completed</div>
+      </div>
+    </div>
+    <!-- right section -->
+    <div class="flex flex-col gap-10">
+      @for(work of workData;track work.name) {
+      <div class="flex items-center gap-4">
+        <div class="p-2.5 bg-[#ffd149] rounded-full">
+          <img
+            class="h-12 w-12"
+            [src]="`assets/Working/${work.name}.png`"
+            alt="{{ work.name }} icon"
+          />
+        </div>
+        <div>
+          <div class="text-xl font-semibold text-[#d1d1d1]">
+            {{ work.name }}
+          </div>
+          <div class="text-[#b0b0b0]">
+            {{ work.desc }}
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
 </div>

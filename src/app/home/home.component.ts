@@ -4,6 +4,7 @@ import { DreamJobComponent } from './dream-job/dream-job.component';
 import { CompanyListComponent } from './company-list/company-list.component';
 import { JobCategoryComponent } from './job-category/job-category.component';
 import { WorkingComponent } from './working/working.component';
+import { TestimonialsComponent } from './testimonials/testimonials.component';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +14,7 @@ import { WorkingComponent } from './working/working.component';
     CompanyListComponent,
     JobCategoryComponent,
     WorkingComponent,
+    TestimonialsComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
