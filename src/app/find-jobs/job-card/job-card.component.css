@@ -1,0 +1,4 @@
+.fill-yellow {
+  filter: brightness(0) saturate(100%) invert(79%) sepia(54%) saturate(504%)
+    hue-rotate(3deg) brightness(104%) contrast(108%);
+}

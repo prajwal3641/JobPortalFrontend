@@ -23,12 +23,19 @@
     <div>
       <!-- <img class="text-[#ffbd20]" src="assets/bookmark.svg" alt="" /> -->
       <svg
+        (click)="toggleBookmark()"
+        [attr.fill]="isBookmarked ? '#ffbd20' : 'none'"
+        [attr.stroke]="isBookmarked ? '#ffbd20' : '#ffbd20'"
         xmlns="http://www.w3.org/2000/svg"
-        fill="currentColor"
+        class="h-6 w-6 cursor-pointer transition duration-200 ease-in-out"
         viewBox="0 0 24 24"
-        class="w-6 h-6 text-[#ffbd20] cursor-pointer"
       >
-        <path d="M6 4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18l-7-5-7 5V4z" />
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M5 5v14l7-5 7 5V5z"
+        />
       </svg>
     </div>
   </div>

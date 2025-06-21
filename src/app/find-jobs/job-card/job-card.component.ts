@@ -9,4 +9,11 @@ import { Job } from './job.model';
 })
 export class JobCardComponent {
   job = input.required<Job>();
+
+  //  for bookmark icon functionlity
+  isBookmarked = false;
+
+  toggleBookmark() {
+    this.isBookmarked = !this.isBookmarked;
+  }
 }
