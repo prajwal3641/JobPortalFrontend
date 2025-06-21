@@ -1,0 +1,14 @@
+<div class="p-5 text-[#f1f1f1]">
+  <div class="flex justify-between">
+    <div class="text-2xl font-semibold">Recommended Jobs</div>
+    <!-- sort option -->
+    <app-sort-combobox />
+  </div>
+
+  <!-- displaying the jobs -->
+  <div class="flex flex-wrap gap-5 mt-10 justify-around">
+    @for(job of jobsData;track $index){
+    <app-job-card [job]="job" />
+    }
+  </div>
+</div>

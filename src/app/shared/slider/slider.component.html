@@ -1,0 +1,42 @@
+<div class="w-full max-w-md mx-auto text-white font-['poppins']">
+  <div class="flex justify-between mb-2 text-sm">
+    <div>Salary</div>
+    <div>&#8377;{{ min() }} LPA - &#8377;{{ max() }} LPA</div>
+  </div>
+
+  <div class="relative h-6">
+    <!-- Track -->
+    <div
+      class="absolute top-1/2 w-full h-1 bg-[#3d3d3d] rounded -translate-y-1/2"
+    ></div>
+
+    <!-- Range highlight -->
+    <div
+      class="absolute top-1/2 h-1 bg-[#ffbd20] rounded -translate-y-1/2"
+      [ngStyle]="{
+        left: (min() / 100) * 100 + '%',
+        width: ((max() - min()) / 100) * 100 + '%'
+      }"
+    ></div>
+
+    <!-- Min range -->
+    <input
+      type="range"
+      [value]="min()"
+      [min]="minLimit"
+      [max]="maxLimit"
+      (input)="onMinChange($event)"
+      class="absolute w-full h-6 appearance-none bg-transparent pointer-events-auto z-10 accent-[#ffbd20]"
+    />
+
+    <!-- Max range -->
+    <input
+      type="range"
+      [value]="max()"
+      [min]="minLimit"
+      [max]="maxLimit"
+      (input)="onMaxChange($event)"
+      class="absolute w-full h-6 appearance-none bg-transparent pointer-events-auto z-10 accent-[#ffbd20]"
+    />
+  </div>
+</div>

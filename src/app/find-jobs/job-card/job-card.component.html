@@ -1,0 +1,83 @@
+<div
+  class="bg-[#3d3d3d] rounded-xl p-4 w-72 flex flex-col gap-3 hover:shadow-[0_0_5px_1px_yellow] !shadow-[#ffbd20] transition duration-400 ease-in-out"
+>
+  <!-- title section -->
+  <div class="flex justify-between">
+    <!-- image and profile-->
+    <div class="flex items-center gap-2">
+      <div class="p-2 bg-[#454545] rounded-md">
+        <img
+          class="h-7 w-7"
+          [src]="`assets/Icons/${job().company}.png`"
+          alt="{{ job().company }}"
+        />
+      </div>
+      <div>
+        <div class="font-semibold">{{ job().jobTitle }}</div>
+        <div class="text-[#b0b0b0] text-xs">
+          {{ job().company }} &#x2022; {{ job().applicants }}
+        </div>
+      </div>
+    </div>
+    <!-- bookmark -->
+    <div>
+      <!-- <img class="text-[#ffbd20]" src="assets/bookmark.svg" alt="" /> -->
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        viewBox="0 0 24 24"
+        class="w-6 h-6 text-[#ffbd20] cursor-pointer"
+      >
+        <path d="M6 4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18l-7-5-7 5V4z" />
+      </svg>
+    </div>
+  </div>
+
+  <!-- job decription tags -->
+  <div
+    class="flex gap-2 [&>div]:py-1 [&>div]:px-2 [&>div]:text-xs [&>div]:rounded-lg [&>div]:bg-[#454545] [&>div]:text-[#ffbd20] mt-2"
+  >
+    <div>{{ job().experience }}</div>
+    <div>{{ job().jobType }}</div>
+    <div>{{ job().location }}</div>
+  </div>
+
+  <!-- actual job description , but line clamp , show only 2 lines or 3 -->
+  <div class="text-[#b0b0b0] text-sm mt-2 line-clamp-3">
+    {{ job().description }}
+  </div>
+
+  <hr class="border border-[#474643] my-2" />
+
+  <!-- package and date -->
+  <div class="flex items-center justify-between">
+    <div class="font-semibold">&#8377; {{ job().package }}</div>
+    <div class="flex gap-1 text-xs items-center">
+      <span class="flex items-center gap-1 text-[#888888] text-xs">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-4 h-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            stroke-width="2"
+            fill="none"
+          />
+          <path
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            d="M12 6v6l4 2"
+          />
+        </svg>
+        {{ job().postedDaysAgo }} days ago
+      </span>
+    </div>
+  </div>
+</div>

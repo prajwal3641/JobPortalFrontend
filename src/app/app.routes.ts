@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { FindJobsComponent } from './find-jobs/find-jobs.component';
 
 export const routes: Routes = [
   {
@@ -8,7 +9,7 @@ export const routes: Routes = [
   },
   {
     path: 'find-jobs',
-    component: HomeComponent,
+    component: FindJobsComponent,
   },
   {
     path: 'find-talent',

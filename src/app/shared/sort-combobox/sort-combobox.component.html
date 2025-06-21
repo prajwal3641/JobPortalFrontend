@@ -1,0 +1,28 @@
+<div class="relative inline-block text-left font-['poppins']">
+  <div
+    (click)="toggleDropdown()"
+    class="cursor-pointer border border-[#ffbd20] text-[#ffbd20] bg-[#2d2d2d] rounded px-3 py-1.5 flex items-center gap-2"
+  >
+    <span>{{ selected() }}</span>
+    <img
+      src="https://img.icons8.com/external-glyph-silhouettes-icons-papa-vector/50/ffbd20/external-Adjustments-photo-and-video-glyph-silhouettes-icons-papa-vector.png"
+      alt="adjust"
+      class="w-8 h-8"
+    />
+  </div>
+
+  @if (open()) {
+  <div
+    class="absolute mt-2 w-full bg-[#2d2d2d] border border-[#ffbd20] rounded-md shadow-lg z-50"
+  >
+    @for (option of options; track option) {
+    <div
+      (click)="select(option)"
+      class="px-3 py-2 hover:bg-[#3d3d3d] cursor-pointer text-white"
+    >
+      {{ option }}
+    </div>
+    }
+  </div>
+  }
+</div>

@@ -11,14 +11,12 @@ import { FooterComponent } from '../layouts/footer/footer.component';
 @Component({
   selector: 'app-home',
   imports: [
-    HeaderComponent,
     DreamJobComponent,
     CompanyListComponent,
     JobCategoryComponent,
     WorkingComponent,
     TestimonialsComponent,
     SubscribeComponent,
-    FooterComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
