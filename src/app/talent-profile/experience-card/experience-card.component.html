@@ -1,0 +1,29 @@
+<div class="flex flex-col gap-2">
+  <div class="flex justify-between text-[#d1d1d1]">
+    <!-- image and profile-->
+    <div class="flex items-center gap-2">
+      <div class="p-2 bg-[#454545] rounded-md">
+        <img
+          class="h-7 w-7"
+          [src]="`assets/Icons/${experience().company}.png`"
+          alt="f"
+        />
+      </div>
+      <div>
+        <div class="font-semibold">{{ experience().title }}</div>
+        <div class="text-[#b0b0b0] text-sm">
+          {{ experience().company }} &#x2022; {{ experience().location }}
+        </div>
+      </div>
+    </div>
+
+    <!-- dates -->
+    <div class="text-sm text-[#b0b0b0]">
+      {{ experience().startDate }} - {{ experience().endDate }}
+    </div>
+  </div>
+  <!-- experience  -->
+  <div class="text-xs text-justify text-[#b0b0b0]">
+    {{ experience().description }}
+  </div>
+</div>

@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { FindJobsComponent } from './find-jobs/find-jobs.component';
+import { FindTalentComponent } from './find-talent/find-talent.component';
+import { TalentProfileComponent } from './talent-profile/talent-profile.component';
 
 export const routes: Routes = [
   {
@@ -13,7 +15,8 @@ export const routes: Routes = [
   },
   {
     path: 'find-talent',
-    component: HomeComponent,
+    component: FindTalentComponent,
+    children: [],
   },
   {
     path: 'upload-job',
@@ -22,5 +25,9 @@ export const routes: Routes = [
   {
     path: 'about',
     component: HomeComponent,
+  },
+  {
+    path: 'talent-profile',
+    component: TalentProfileComponent,
   },
 ];

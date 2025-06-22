@@ -1,0 +1,22 @@
+<div class="flex justify-between text-[#d1d1d1]">
+  <!-- image and profile-->
+  <div class="flex items-center gap-2">
+    <div class="p-2 bg-[#454545] rounded-md">
+      <img
+        class="h-7 w-7"
+        [src]="`assets/Icons/${certification().issuer}.png`"
+        alt="f"
+      />
+    </div>
+    <div>
+      <div class="font-semibold">{{ certification().name }}</div>
+      <div class="text-[#b0b0b0] text-sm">{{ certification().issuer }}</div>
+    </div>
+  </div>
+
+  <!-- dates -->
+  <div class="text-sm text-[#b0b0b0] flex flex-col items-end">
+    <div>{{ certification().issueDate }}</div>
+    <div>{{ certification().certificateId }}</div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<div class="p-5 text-[#f1f1f1]">
+  <div class="flex justify-between">
+    <div class="text-2xl font-semibold">Talents</div>
+    <!-- sort option -->
+    <app-sort-combobox />
+  </div>
+
+  <!-- displaying the talents -->
+  <div class="flex flex-wrap gap-5 mt-10 justify-around">
+    @for(talent of talentsData;track $index){
+    <app-talent-card [talent]="talent" />
+    }
+  </div>
+</div>

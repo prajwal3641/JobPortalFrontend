@@ -1,0 +1,105 @@
+<div class=" ">
+  <!-- banner image and profile image   -->
+  <div class="relative">
+    <img
+      class="rounded-t-2xl"
+      src="assets/Profile/banner.jpg"
+      alt="banner image"
+    />
+    <img
+      class="absolute -bottom-14 left-3 h-48 w-48 border-8 border-[#2d2d2d] rounded-full"
+      src="assets/avatar.png"
+      alt="banner image"
+    />
+  </div>
+
+  <!-- profile info -->
+  <!-- profile info   -->
+  <div class="flex flex-col gap-1 px-3 mt-16 text-[#d1d1d1]">
+    <div class="flex justify-between items-center">
+      <div class="text-3xl font-semibold">{{ profile().name }}</div>
+      <div>
+        <button
+          routerLink="/find-jobs"
+          class="w-full rounded px-4 py-2 text-[#ffbd20] bg-[#ffbd2033] hover:bg-[#ffbd204d] transition"
+        >
+          Message
+        </button>
+      </div>
+    </div>
+    <div class="text-xl">
+      {{ profile().role }} &bull; {{ profile().company }}
+    </div>
+    <div>
+      <span class="flex items-center gap-1 text-[#888888] text-md">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="#888888"
+          viewBox="0 0 24 24"
+          stroke="#888888"
+          class="h-5 w-5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z"
+          />
+        </svg>
+
+        {{ profile().location }}
+      </span>
+    </div>
+  </div>
+
+  <hr class="border border-[#474643] my-6 mx-3" />
+
+  <!-- About section -->
+  <div class="px-3">
+    <div class="text-2xl font-semibold text-[#d1d1d1]">About</div>
+    <div class="text-sm text-[#b0b0b0] text-justify">
+      {{ profile().about }}
+    </div>
+  </div>
+
+  <hr class="border border-[#474643] my-6 mx-3" />
+
+  <!-- Skills section -->
+  <div class="px-3">
+    <div class="text-2xl font-semibold text-[#d1d1d1]">Skills</div>
+    <div class="flex flex-wrap gap-2">
+      <!-- skill use for loop -->
+      @for(skill of profile().skills;track $index){
+      <div
+        class="bg-[#ffd149]/15 text-[#ffbd20] rounded-3xl px-3 py-1 font-medium"
+      >
+        {{ skill }}
+      </div>
+      }
+    </div>
+  </div>
+
+  <hr class="border border-[#474643] my-6 mx-3" />
+
+  <!-- Experience section -->
+  <div class="px-3">
+    <div class="text-2xl font-semibold mb-5 text-[#d1d1d1]">Experience</div>
+    <div class="flex flex-col gap-8">
+      @for(experience of profile().experience;track $index){
+      <app-experience-card [experience]="experience" />
+      }
+    </div>
+  </div>
+
+  <hr class="border border-[#474643] my-6 mx-3" />
+
+  <!-- Certifications section -->
+  <div class="px-3">
+    <div class="text-2xl font-semibold mb-5 text-[#d1d1d1]">Certification</div>
+    <div class="flex flex-col gap-8">
+      @for(certification of profile().certifications;track $index){
+      <app-certification-card [certification]="certification" />
+      }
+    </div>
+  </div>
+</div>
