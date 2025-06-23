@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { talents } from '../../Data/TalentData';
 import { TalentCardComponent } from '../../find-talent/talent-card/talent-card.component';
+import { TalentProfile } from '../profile/profile.model';
+import { Talent } from '../../find-talent/talent-card/talent.model';
 
 @Component({
   selector: 'app-recommend-talent',
@@ -9,5 +11,5 @@ import { TalentCardComponent } from '../../find-talent/talent-card/talent-card.c
   styleUrl: './recommend-talent.component.css',
 })
 export class RecommendTalentComponent {
-  talentsData = talents;
+  recommended = input.required<Talent[]>();
 }

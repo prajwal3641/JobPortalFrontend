@@ -19,8 +19,8 @@ export class HeaderComponent {
       url: '/find-talent',
     },
     {
-      name: 'Upload Job',
-      url: '/upload-job',
+      name: 'Post Job',
+      url: '/post-job',
     },
     {
       name: 'about',

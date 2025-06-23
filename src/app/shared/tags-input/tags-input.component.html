@@ -1,0 +1,42 @@
+<div class="font-['poppins'] w-full">
+  <label class="block mb-1 text-white text-sm"
+    >{{ label() }}
+    @if (required) {
+    <span class="text-red-500">*</span>
+    }
+  </label>
+
+  <div
+    class="flex flex-wrap items-center overflow-x-auto gap-2 p-2 rounded-md bg-[#2d2d2d] border border-[#555]"
+  >
+    <!-- Tag Pills -->
+    @for (tag of tags(); track tag) {
+    <div
+      class="bg-[#ffbd20] text-black text-sm px-2 py-1 rounded-full flex items-center gap-1"
+    >
+      {{ tag }}
+      <button (click)="removeTag(tag)" class="text-xs">×</button>
+    </div>
+    }
+
+    <!-- Input Field -->
+    <input
+      class="bg-transparent py-2 text-white outline-none placeholder-[#a0a0a0] text-sm flex-grow min-w-[100px]"
+      type="text"
+      [placeholder]="tags().length === 0 ? placeholder : ''"
+      [(ngModel)]="inputValue"
+      (keydown)="handleKey($event)"
+      (blur)="onBlur()"
+    />
+
+    <!-- Clear All -->
+    @if (tags().length > 0) {
+    <button
+      (click)="clearAll()"
+      class="ml-auto text-[#ffbd20] text-xs hover:underline"
+    >
+      Clear
+    </button>
+    }
+  </div>
+</div>

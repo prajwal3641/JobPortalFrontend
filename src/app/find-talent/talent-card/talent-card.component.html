@@ -87,7 +87,7 @@
     <!-- profile button -->
     <div>
       <button
-        routerLink="/talent-profile"
+        [routerLink]="['/talent-profile', talent().name]"
         class="w-full px-4 py-2 rounded bg-[#3d3d3d] text-[#ffd149] border border-[#ffbd20] hover:bg-[#ffbd20] hover:text-white transition duration-200"
       >
         Profile

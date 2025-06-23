@@ -3,6 +3,7 @@ import { HomeComponent } from './home/home.component';
 import { FindJobsComponent } from './find-jobs/find-jobs.component';
 import { FindTalentComponent } from './find-talent/find-talent.component';
 import { TalentProfileComponent } from './talent-profile/talent-profile.component';
+import { PostJobComponent } from './post-job/post-job.component';
 
 export const routes: Routes = [
   {
@@ -19,15 +20,15 @@ export const routes: Routes = [
     children: [],
   },
   {
-    path: 'upload-job',
-    component: HomeComponent,
+    path: 'post-job',
+    component: PostJobComponent,
   },
   {
     path: 'about',
     component: HomeComponent,
   },
   {
-    path: 'talent-profile',
+    path: 'talent-profile/:userName',
     component: TalentProfileComponent,
   },
 ];
