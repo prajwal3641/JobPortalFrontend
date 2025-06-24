@@ -1,7 +1,7 @@
 const searchFields = [
   {
     title: 'Job Title',
-    icon: 'assets/dropdown/search.svg',
+    icon: 'assets/search.svg',
     options: [
       'Designer',
       'Developer',

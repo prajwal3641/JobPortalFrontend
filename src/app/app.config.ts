@@ -6,6 +6,7 @@ import {
 import {
   provideRouter,
   withComponentInputBinding,
+  withInMemoryScrolling,
   withRouterConfig,
 } from '@angular/router';
 
@@ -21,6 +22,9 @@ export const appConfig: ApplicationConfig = {
       withComponentInputBinding(),
       withRouterConfig({
         paramsInheritanceStrategy: 'always',
+      }),
+      withInMemoryScrolling({
+        scrollPositionRestoration: 'top',
       })
     ),
     provideAnimations(),

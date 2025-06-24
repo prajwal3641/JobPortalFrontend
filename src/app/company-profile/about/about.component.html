@@ -1,0 +1,32 @@
+<div class="flex flex-col gap-5">
+  <!-- now print the object -->
+  @for(entry of Object.entries(aboutData); track entry[0]) {
+  <!-- print key -->
+  <div
+    class="text-xl mb-3 font-semibold text-[#ffffff]"
+    *ngIf="entry[0] != 'Name'"
+  >
+    {{ entry[0] }}
+  </div>
+
+  <!-- print value -->
+  @if(entry[0] === 'Specialties'){
+  <div class="flex flex-wrap gap-5 text-[#dddddd]">
+    @for(spec of entry[1];track $index){
+    <span>&bull; {{ spec }}</span>
+    }
+  </div>
+  }@else if(entry[0] === 'Website'){
+  <a
+    target="_blank"
+    class="text-sm text-justify text-[#ffbd20]"
+    [href]="entry[1]"
+  >
+    {{ entry[1] }}
+  </a>
+  }@else {
+  <div class="text-sm text-justify text-[#bbbbbb]" *ngIf="entry[0] !== 'Name'">
+    {{ entry[1] }}
+  </div>
+  } }
+</div>

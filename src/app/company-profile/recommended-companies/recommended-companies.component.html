@@ -1,0 +1,12 @@
+<div class="text-[#d1d1d1]">
+  <div class="text-xl font-semibold mg-5 text-[#d1d1d1]">
+    Recommended Companies
+  </div>
+  <div>
+    <div class="flex flex-col flex-wrap gap-5 mt-5">
+      @for(company of recommended;track $index){
+      <app-company-card [company]="company" />
+      }
+    </div>
+  </div>
+</div>

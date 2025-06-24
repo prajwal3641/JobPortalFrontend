@@ -1,0 +1,26 @@
+<div>
+  <div
+    class="flex justify-between rounded-2xl bg-[#3d3d3d] py-2 px-2 items-center"
+  >
+    <!-- image and profile-->
+    <div class="flex items-center gap-2">
+      <div class="p-2 bg-[#454545] rounded-md">
+        <img
+          class="h-7 w-7"
+          [src]="`assets/Icons/${company().name}.png`"
+          alt="{{ company().name }}"
+        />
+      </div>
+      <div>
+        <div class="font-semibold">{{ company().name }}</div>
+        <div class="text-[#b0b0b0] text-xs">
+          {{ company().employees }} Employees
+        </div>
+      </div>
+    </div>
+    <!-- bookmark -->
+    <div>
+      <img class="text-[#ffbd20]" src="assets/external-link.svg" alt="" />
+    </div>
+  </div>
+</div>

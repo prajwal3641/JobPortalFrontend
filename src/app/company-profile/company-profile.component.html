@@ -7,8 +7,85 @@
   </button>
 
   <!-- main section  -->
-  <div class="flex mt-3 gap-5">
+  <div class="flex mt-3 gap-5 justify-between">
     <!-- here  -->
-    <div></div>
+    <div class="w-3/4">
+      <!-- profile section upto locatiom -->
+      <div>
+        <!-- images banner and profile -->
+        <div class="relative">
+          <img
+            class="rounded-t-2xl"
+            src="assets/Profile/banner.jpg"
+            alt="banner image"
+          />
+          <img
+            class="absolute p-2 -bottom-14 left-3 h-36 w-36 border-6 border-[#2d2d2d] rounded-3xl bg-[#3d3d3d]"
+            src="assets/Icons/Google.png"
+            alt="banner image"
+          />
+        </div>
+
+        <!-- profile info -->
+        <div class="flex flex-col gap-1 px-3 mt-16 text-[#d1d1d1]">
+          <div class="flex justify-between items-center">
+            <div class="text-3xl font-semibold">Google</div>
+            <!-- avatar card -->
+            <div class="rounded-lg backdrop-blur-lg">
+              <!-- Avatar groups-->
+              <div class="flex -space-x-3">
+                <img
+                  src="assets/avatar.png"
+                  class="w-10 h-10 rounded-full border-2 border-white object-cover"
+                />
+                <img
+                  src="assets/avatar1.png"
+                  class="w-10 h-10 rounded-full border-2 border-white object-cover"
+                />
+                <img
+                  src="assets/avatar2.png"
+                  class="w-10 h-10 rounded-full border-2 border-white object-cover"
+                />
+                <div
+                  class="w-10 h-10 rounded-full border-2 border-white bg-gray-600 text-white flex items-center justify-center text-sm"
+                >
+                  +9k
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- location -->
+          <div>
+            <span class="flex items-center gap-1 text-[#888888] text-md">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="#888888"
+                viewBox="0 0 24 24"
+                stroke="#888888"
+                class="h-5 w-5"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z"
+                />
+              </svg>
+
+              New York , United States
+            </span>
+          </div>
+        </div>
+      </div>
+      <hr class="border border-[#474643] my-5" />
+
+      <!-- tabs section -->
+      <div>
+        <app-tabs [titles]="tabTitles" [components]="tabComponents" />
+      </div>
+    </div>
+    <div class="1/4">
+      <app-recommended-companies />
+    </div>
   </div>
 </div>
