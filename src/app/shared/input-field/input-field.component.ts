@@ -1,3 +1,4 @@
+import { NgClass } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
@@ -5,13 +6,14 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-input-field',
   templateUrl: './input-field.component.html',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, NgClass],
 })
 export class InputFieldComponent {
   @Input() type: string = 'text'; // 'text', 'number', 'email', 'file', 'textarea'
   @Input() label: string = '';
   @Input() placeholder: string = 'Enter value';
   @Input() required: boolean = false;
+  @Input() readOnly: boolean = false;
 
   @Input() min?: number;
   @Input() max?: number;
@@ -19,6 +21,10 @@ export class InputFieldComponent {
   @Input() minRows: number = 2;
 
   value: any = null;
+
+  ngOnChanges() {
+    console.log('inppt' + this.readOnly);
+  }
 
   onFileChange(event: Event): void {
     const file = (event.target as HTMLInputElement).files?.[0];

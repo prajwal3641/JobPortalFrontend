@@ -9,14 +9,27 @@
   } @if (type === 'textarea') {
   <textarea
     class="bg-[#2d2d2d] text-white p-3 rounded border border-[#555555] hover:border-[#ffbd20] focus:border-[#ffbd20] focus:outline-none transition-all appearance-none resize-none"
+    [ngClass]="[
+      'text-white transition-all focus:outline-none appearance-none resize-none  placeholder:text-gray-400 placeholder:text-sm',
+      readOnly === true
+        ? 'bg-transparent p-0 border-none cursor-default'
+        : 'bg-[#2d2d2d] p-3 rounded border border-[#555555] hover:border-[#ffbd20] focus:border-[#ffbd20]'
+    ]"
     [attr.placeholder]="placeholder"
     [required]="required"
     [style.minHeight.px]="minRows * 24"
     [(ngModel)]="value"
+    [readonly]="readOnly"
   ></textarea>
   }@else if (type === 'file') {
   <label
-    class="flex items-center justify-between gap-2 bg-[#2d2d2d] text-white p-3 rounded border border-[#555555] hover:border-[#ffbd20] cursor-pointer transition-all"
+    [ngClass]="[
+      'flex items-center justify-between gap-2 text-white transition-all  placeholder:text-gray-400 placeholder:text-sm',
+
+      readOnly === true
+        ? 'bg-transparent p-0 border-none cursor-default'
+        : 'bg-[#2d2d2d] p-3 rounded border border-[#555555] hover:border-[#ffbd20] cursor-pointer'
+    ]"
   >
     <div class="flex gap-2 items-center">
       <input
@@ -25,6 +38,7 @@
         class="hidden"
         [required]="required"
         (change)="onFileChange($event)"
+        [disabled]="readOnly"
       />
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -43,9 +57,11 @@
           d="M15 7l-6.5 6.5a1.5 1.5 0 0 0 3 3l6.5 -6.5a3 3 0 0 0 -6 -6l-6.5 6.5a4.5 4.5 0 0 0 9 9l6.5 -6.5"
         />
       </svg>
-      <span>{{ value?.name || "Choose File" }}</span>
+      <span class="text-gray-400 text-sm">{{
+        value?.name || "Choose File"
+      }}</span>
     </div>
-    @if (value) {
+    @if (value && !readOnly) {
     <button
       type="button"
       class="text-gray-400 hover:text-red-400 focus:outline-none text-sm"
@@ -57,7 +73,12 @@
   </label>
   } @else {
   <input
-    class="bg-[#2d2d2d] text-white p-2 rounded border border-[#7c7b7b] placeholder:text-gray-400 placeholder:text-sm hover:border-[#ffbd20] focus:border-[#ffbd20] focus:outline-none transition-all appearance-none"
+    [ngClass]="[
+      'transition-all focus:outline-none appearance-none placeholder:text-gray-400 placeholder:text-sm text-white',
+      readOnly === true
+        ? 'bg-transparent border-none p-0'
+        : 'bg-[#2d2d2d] border border-[#7c7b7b] p-2 rounded hover:border-[#ffbd20] focus:border-[#ffbd20]'
+    ]"
     [class.number-to-text]="type === 'number'"
     [type]="type"
     [placeholder]="placeholder"
@@ -65,6 +86,7 @@
     [attr.min]="type === 'number' ? min : null"
     [attr.max]="type === 'number' ? max : null"
     [ngModel]="value"
+    [readonly]="readOnly"
   />
   }
 </div>

@@ -6,6 +6,7 @@ import { TalentProfileComponent } from './talent-profile/talent-profile.componen
 import { PostJobComponent } from './post-job/post-job.component';
 import { JobDescriptionComponent } from './job-description/job-description.component';
 import { ApplyJobComponent } from './apply-job/apply-job.component';
+import { CompanyProfileComponent } from './company-profile/company-profile.component';
 
 export const routes: Routes = [
   {
@@ -40,6 +41,10 @@ export const routes: Routes = [
   {
     path: 'apply-job',
     component: ApplyJobComponent,
+  },
+  {
+    path: 'company',
+    component: CompanyProfileComponent,
   },
   // {
   //   path: '**',

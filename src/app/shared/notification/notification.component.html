@@ -1,0 +1,49 @@
+<div
+  class="fixed top-4 left-1/2 transform -translate-x-1/2 w-[90%] max-w-md px-4 py-3 border-l-4 rounded shadow-lg bg-[#444242] border-[#ffbd20] text-white flex items-start gap-3 z-50 transition-all duration-300 ease-in-out"
+  role="alert"
+  [class.opacity-0]="!show"
+  [class.opacity-100]="show"
+  [class.-translate-y-5]="!show"
+  [class.translate-y-0]="show"
+  [class.pointer-events-none]="!show"
+>
+  <div class="mt-1">
+    <svg
+      *ngIf="type === 'success'"
+      xmlns="http://www.w3.org/2000/svg"
+      class="text-green-400"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M20 6L9 17l-5-5" />
+    </svg>
+
+    <svg
+      *ngIf="type === 'error'"
+      xmlns="http://www.w3.org/2000/svg"
+      class="text-red-400"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <line x1="18" y1="6" x2="6" y2="18" />
+      <line x1="6" y1="6" x2="18" y2="18" />
+    </svg>
+  </div>
+
+  <div>
+    <p class="font-semibold mb-1">{{ title }}</p>
+    <p class="text-sm text-gray-300">{{ message }}</p>
+  </div>
+</div>
