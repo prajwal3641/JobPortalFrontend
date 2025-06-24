@@ -1,7 +1,7 @@
 const dropdownData = [
   {
     title: 'Job Title',
-    icon: 'assets/dropdown/search.svg',
+    icon: 'assets/search.svg',
     options: [
       'Designer',
       'Developer',
@@ -15,7 +15,7 @@ const dropdownData = [
   },
   {
     title: 'Location',
-    icon: 'https://img.icons8.com/windows/32/ffbd20/marker.png',
+    icon: 'assets/location.png',
     options: [
       'Delhi',
       'New York',
@@ -29,18 +29,19 @@ const dropdownData = [
   },
   {
     title: 'Experience',
-    icon: 'https://img.icons8.com/pastel-glyph/64/ffbd20/briefcase--v3.png',
+    icon: 'assets/briefcase.svg',
     options: ['Entry Level', 'Intermediate', 'Expert'],
   },
   {
     title: 'Job Type',
-    icon: 'https://img.icons8.com/metro/26/ffbd20/under-computer.png',
+    icon: 'assets/workspace.png',
     options: ['Full Time', 'Part Time', 'Contract', 'Freelance', 'Internship'],
   },
 ];
 
 const jobList = [
   {
+    id: 'j1',
     jobTitle: 'Product Designer',
     company: 'Meta',
     applicants: 25,
@@ -53,6 +54,7 @@ const jobList = [
       "Meta is seeking a Product Designer to join our team. You'll be working on designing user-centric interfaces for our blockchain wallet platform. This is an excellent opportunity for entry-level designers to grow their skills in a dynamic environment.",
   },
   {
+    id: 'j2',
     jobTitle: 'Sr. UX Designer',
     company: 'Netflix',
     applicants: 14,
@@ -65,6 +67,7 @@ const jobList = [
       'Netflix is looking for a Sr. UX Designer to enhance our user experience on streaming platforms. Ideal candidates will have extensive experience in user research and interaction design, helping us to deliver engaging content to our global audience.',
   },
   {
+    id: 'j3',
     jobTitle: 'Product Designer',
     company: 'Microsoft',
     applicants: 58,
@@ -77,6 +80,7 @@ const jobList = [
       "Join Microsoft as a Product Designer and contribute to our new Lightspeed LA studio. We're looking for designers who can create intuitive and compelling gaming experiences. This is a remote position, offering flexibility and the opportunity to work with a leading technology company.",
   },
   {
+    id: 'j4',
     jobTitle: 'Product Designer',
     company: 'Adobe',
     applicants: 23,
@@ -89,6 +93,7 @@ const jobList = [
       'Adobe is seeking a part-time Product Designer to help us enhance our user experience. You will work closely with our team to design features that make our platform more engaging and user-friendly. This role is perfect for experienced designers looking for flexible work hours.',
   },
   {
+    id: 'j5',
     jobTitle: 'Backend Developer',
     company: 'Google',
     applicants: 21,
@@ -101,6 +106,7 @@ const jobList = [
       "Google is hiring a Backend Developer to join our team in Bangalore. You'll be responsible for developing scalable backend systems that power our services. This role requires strong problem-solving skills and experience with modern backend technologies.",
   },
   {
+    id: 'j6',
     jobTitle: 'SMM Manager',
     company: 'Spotify',
     applicants: 73,
@@ -113,6 +119,7 @@ const jobList = [
       'Spotify is looking for an SMM Manager to lead our social media marketing efforts in Delhi. You will create and manage campaigns to promote our music streaming service, engage with our audience, and drive growth. This role is ideal for creative marketers with a passion for music.',
   },
   {
+    id: 'j7',
     jobTitle: 'Frontend Developer',
     company: 'Amazon',
     applicants: 50,
@@ -125,6 +132,7 @@ const jobList = [
       'Amazon is looking for a Frontend Developer to build and maintain our customer-facing applications. You will work with a dynamic team to create seamless and responsive web applications.',
   },
   {
+    id: 'j8',
     jobTitle: 'iOS Developer',
     company: 'Apple',
     applicants: 30,

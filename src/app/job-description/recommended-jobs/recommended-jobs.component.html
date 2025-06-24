@@ -1,0 +1,12 @@
+<div class="text-[#d1d1d1]">
+  <div class="text-xl font-semibold mg-5 text-[#d1d1d1]">
+    Recommended Talent
+  </div>
+  <div>
+    <div class="flex flex-col items-center flex-wrap gap-5 mt-5">
+      @for(job of jobs.slice(0,5);track $index){
+      <app-job-card [job]="job" />
+      }
+    </div>
+  </div>
+</div>

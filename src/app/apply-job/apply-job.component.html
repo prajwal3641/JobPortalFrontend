@@ -1,0 +1,91 @@
+<div class="min-h-[90vh] font-['poppins'] bg-[#2d2d2d] p-4 text-[#d1d1d1]">
+  <!-- back button  -->
+
+  <button
+    [routerLink]="['/jobs', 'j1']"
+    class="rounded px-4 py-2 text-[#ffbd20] bg-[#ffbd2033] hover:bg-[#ffbd204d] transition"
+  >
+    &#8592; Back
+  </button>
+
+  <!-- start -->
+
+  <div class="w-2/3 mx-auto">
+    <!-- component starts  -->
+    <div class="flex justify-between">
+      <!-- image and profile-->
+      <div class="flex items-center gap-2">
+        <div class="p-3 bg-[#454545] rounded-xl">
+          <img
+            class="h-14 w-14"
+            [src]="`assets/Icons/Google.png`"
+            alt="company"
+          />
+        </div>
+        <div class="flex flex-col gap-1">
+          <div class="font-semibold text-2xl">Software Engineer |||</div>
+          <div class="text-[#b0b0b0] text-lg">
+            Google &bull; 3 days ago &#x2022; 20 Applicants
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- line break -->
+    <hr class="border border-[#474643] mt-6 mb-4" />
+
+    <!-- submit your application  -->
+    <div class="text-xl font-semibold mb-5">Submit Your Application</div>
+
+    <!-- take inputs -->
+    <div class="flex flex-col gap-2">
+      <div class="flex gap-10 [&>*]:w-1/2">
+        <app-input-field
+          label="Full Name"
+          placeholder="Enter Name"
+          [required]="true"
+        />
+        <app-input-field
+          label="Email"
+          placeholder="Enter Email"
+          [required]="true"
+        />
+      </div>
+      <div class="flex gap-10 [&>*]:w-1/2">
+        <app-input-field
+          label="Phone Number"
+          placeholder="Enter Phone Number"
+          [required]="true"
+          [min]="0"
+          [max]="9999999999"
+          type="number"
+        />
+        <app-input-field
+          label="Personal Website"
+          placeholder="Enter Url"
+          [required]="true"
+        />
+      </div>
+      <app-input-field
+        label="Attach your CV"
+        type="file"
+        placeholder="Attach your CV"
+        [required]="true"
+      />
+      <app-input-field
+        label="Cover Letter"
+        type="textarea"
+        [minRows]="4"
+        placeholder="Type something about yourself...."
+      />
+
+      <!-- preview button -->
+      <button
+        [routerLink]="['/jobs', 'j1']"
+        class="rounded px-4 py-2 text-[#ffbd20] bg-[#ffbd2033] hover:bg-[#ffbd204d] transition"
+      >
+        Preview
+      </button>
+    </div>
+  </div>
+</div>

@@ -4,6 +4,8 @@ import { FindJobsComponent } from './find-jobs/find-jobs.component';
 import { FindTalentComponent } from './find-talent/find-talent.component';
 import { TalentProfileComponent } from './talent-profile/talent-profile.component';
 import { PostJobComponent } from './post-job/post-job.component';
+import { JobDescriptionComponent } from './job-description/job-description.component';
+import { ApplyJobComponent } from './apply-job/apply-job.component';
 
 export const routes: Routes = [
   {
@@ -31,4 +33,16 @@ export const routes: Routes = [
     path: 'talent-profile/:userName',
     component: TalentProfileComponent,
   },
+  {
+    path: 'jobs/:jobId',
+    component: JobDescriptionComponent,
+  },
+  {
+    path: 'apply-job',
+    component: ApplyJobComponent,
+  },
+  // {
+  //   path: '**',
+  //   component:
+  // }
 ];
