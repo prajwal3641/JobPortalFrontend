@@ -1,9 +1,10 @@
 import { Component, input } from '@angular/core';
 import { card, desc, skills } from '../../Data/JobDescData';
 import DOMPurify from 'dompurify';
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-job-description-overview',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './job-description-overview.component.html',
   styleUrl: './job-description-overview.component.css',
 })
