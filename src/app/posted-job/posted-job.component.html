@@ -1,0 +1,45 @@
+<div class="min-h-[90vh] font-['poppins'] bg-[#2d2d2d] px-4 text-[#d1d1d1]">
+  <!-- main section  -->
+  <div class="flex mt-3 gap-5">
+    <!-- here  -->
+
+    <!-- jobs : active and draft -->
+    <div class="w-1/6 mt-5">
+      <div class="text-2xl font-semibold mb-5">Jobs</div>
+      <!-- tabs !!!  -->
+      <div>
+        <app-tabs
+          [titles]="['Active', 'Drafts']"
+          [components]="tabComponents"
+          [componentInputs]="tabComponentsInputs"
+        />
+      </div>
+    </div>
+
+    <!-- posted job description -->
+    <div class="mt-5 w-3/4 px-5">
+      <!-- title -->
+      <div class="text-2xl font-semibold flex items-center gap-2">
+        Software Engineer
+        <span
+          class="inline-block px-3 py-1 text-xs font-medium rounded-full text-[#ffbd20] bg-[#756541]"
+        >
+          Badge
+        </span>
+      </div>
+
+      <div class="font-medium mb-5 text-[#b0b0b0]">
+        New York , United States
+      </div>
+
+      <!-- tabs !! -->
+      <div>
+        <app-tabs
+          [titles]="['Overview', 'Applicants', 'Invited']"
+          [components]="tabComponents2"
+          [componentInputs]="tabComponentInput2"
+        />
+      </div>
+    </div>
+  </div>
+</div>

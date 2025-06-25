@@ -5,7 +5,6 @@
     (click)="toggleDropdown()"
   >
     <div class="flex items-center gap-2">
-      <!-- search icon -->
       <div class="bg-[#3d3d3d] p-2 rounded-full text-[#ffbd20]">
         <img class="h-6 w-6" [src]="iconPath()" alt="icon here" />
       </div>
@@ -41,19 +40,23 @@
   >
     <!-- 🔍 Search Bar -->
     <input
+      #searchBox
       [ngModel]="search()"
       (ngModelChange)="search.set($event)"
-      (keyup.enter)="addItemFromSearch()"
+      (keydown)="handleKeyDown($event)"
       placeholder="Search Jobs"
       class="w-full bg-[#2d2d2d] p-2 rounded-md outline-none"
     />
 
     <!-- ✅ Filtered Options -->
-    <div class="overflow-y-auto space-y-1">
+    <div class="overflow-y-auto max-h-[20rem] space-y-1">
       @for (item of filteredItems(); track item) {
       <div
         class="flex items-center gap-2 px-2 py-1 rounded hover:bg-[#3d3d3d] cursor-pointer"
-        (click)="selectItem(item)"
+        [ngClass]="{
+          'bg-[#ffbd20] text-black': highlightedIndex() === $index
+        }"
+        (mousedown)="handleItemMouseDown($event, item)"
       >
         <div
           class="h-4 w-4 bg-[#2d2d2d] rounded flex items-center justify-center"

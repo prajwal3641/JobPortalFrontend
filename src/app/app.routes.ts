@@ -7,6 +7,8 @@ import { PostJobComponent } from './post-job/post-job.component';
 import { JobDescriptionComponent } from './job-description/job-description.component';
 import { ApplyJobComponent } from './apply-job/apply-job.component';
 import { CompanyProfileComponent } from './company-profile/company-profile.component';
+import { PostedJobComponent } from './posted-job/posted-job.component';
+import { JobHistoryPageComponent } from './job-history-page/job-history-page.component';
 
 export const routes: Routes = [
   {
@@ -27,8 +29,8 @@ export const routes: Routes = [
     component: PostJobComponent,
   },
   {
-    path: 'about',
-    component: HomeComponent,
+    path: 'posted-job',
+    component: PostedJobComponent,
   },
   {
     path: 'talent-profile/:userName',
@@ -45,6 +47,10 @@ export const routes: Routes = [
   {
     path: 'company',
     component: CompanyProfileComponent,
+  },
+  {
+    path: 'job-history',
+    component: JobHistoryPageComponent,
   },
   // {
   //   path: '**',

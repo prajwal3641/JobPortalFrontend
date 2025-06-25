@@ -1,0 +1,5 @@
+<div class="flex flex-col gap-4">
+  @for(job of jobs();track $index){
+  <app-posted-job-card [job]="job" />
+  }
+</div>

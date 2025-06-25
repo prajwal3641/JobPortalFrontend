@@ -1,0 +1,130 @@
+<div class="flex gap-4 flex-wrap justify-between items-center">
+  @for(job of jobs();track $index){
+  <div
+    class="bg-[#3d3d3d] rounded-xl p-4 w-72 flex flex-col gap-3 hover:shadow-[0_0_5px_1px_yellow] !shadow-[#ffbd20] transition duration-400 ease-in-out mt-2"
+  >
+    <!-- title section -->
+    <div class="flex justify-between">
+      <!-- image and profile-->
+      <div class="flex items-center gap-2">
+        <div class="p-2 bg-[#454545] rounded-md">
+          <img
+            class="h-7 w-7"
+            [src]="`assets/Icons/${job.company}.png`"
+            alt="{{ job.company }}"
+          />
+        </div>
+        <div>
+          <div class="font-semibold">{{ job.jobTitle }}</div>
+          <div class="text-[#b0b0b0] text-xs">
+            {{ job.company }} &#x2022; {{ job.applicants }}
+          </div>
+        </div>
+      </div>
+      <!-- bookmark -->
+      <div>
+        <!-- <img class="text-[#ffbd20]" src="assets/bookmark.svg" alt="" /> -->
+        <svg
+          [attr.fill]="saved() ? '#ffbd20' : 'none'"
+          [attr.stroke]="saved() ? '#ffbd20' : '#ffbd20'"
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6 cursor-pointer transition duration-200 ease-in-out"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M5 5v14l7-5 7 5V5z"
+          />
+        </svg>
+      </div>
+    </div>
+
+    <!-- job decription tags -->
+    <div
+      class="flex gap-2 [&>div]:py-1 [&>div]:px-2 [&>div]:text-xs [&>div]:rounded-lg [&>div]:bg-[#454545] [&>div]:text-[#ffbd20] mt-2"
+    >
+      <div>{{ job.experience }}</div>
+      <div>{{ job.jobType }}</div>
+      <div>{{ job.location }}</div>
+    </div>
+
+    <!-- actual job description , but line clamp , show only 2 lines or 3 -->
+    <div class="text-[#b0b0b0] text-sm mt-2 line-clamp-3">
+      {{ job.description }}
+    </div>
+
+    <hr class="border border-[#474643] my-2" />
+
+    <!-- package and date -->
+    <div class="flex items-center justify-between">
+      <div class="font-semibold">&#8377; {{ job.package }}</div>
+      <div class="flex gap-1 text-xs items-center">
+        <span class="flex items-center gap-1 text-[#888888] text-xs">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-4 h-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <circle
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              stroke-width="2"
+              fill="none"
+            />
+            <path
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              d="M12 6v6l4 2"
+            />
+          </svg>
+          <span *ngIf="applied() || interviewing()">Applied </span>
+          <span *ngIf="offered()">Interviewed </span>
+          <span *ngIf="!offered() && !applied() && !interviewing()"
+            >Posted</span
+          >
+          {{ job.postedDaysAgo }} days ago
+        </span>
+      </div>
+    </div>
+
+    <!-- buttons -->
+    @if(offered()){
+    <hr class="border border-[#474643] my-2" />
+
+    <div class="flex [&>*]:w-1/2 gap-2">
+      <!-- profile button -->
+      <div>
+        <button
+          class="w-full px-4 py-2 rounded bg-[#3d3d3d] text-[#ffd149] border border-[#ffbd20] hover:bg-[#ffbd20] hover:text-white transition duration-200"
+        >
+          Accept
+        </button>
+      </div>
+
+      <!-- Message Button -->
+      <div>
+        <button
+          class="w-full rounded px-4 py-2 text-[#ffbd20] bg-[#ffbd2033] hover:bg-[#ffbd204d] transition"
+        >
+          Reject
+        </button>
+      </div>
+    </div>
+    } @if(interviewing()){
+    <hr class="border border-[#474643] my-2" />
+
+    <div class="flex gap-2 items-center text-sm">
+      <img class="h-6 w-6" src="assets/calender.png" alt="calender" /> Sun, 25
+      August &bull; <span class="text-[#888888]">10:00 AM</span>
+    </div>
+    }
+  </div>
+  }
+</div>

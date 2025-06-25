@@ -1,21 +1,23 @@
-<div class="w-full max-w-4xl mx-auto text-white">
+<div class="w-full mx-auto text-white">
   <!-- Tab Titles -->
   <div class="flex gap-8 border-b border-[#555555] mb-6">
     <button
-      *ngFor="let tab of titles; let i = index"
-      class="text-lg font-semibold pb-2 transition-colors capitalize"
+      *ngFor="let title of titles; index as i"
+      class="text-lg font-semibold pb-2 px-2 transition-colors capitalize"
       [ngClass]="{
-        'text-[#ffbd20] border-b-2 border-[#ffbd20]': isActive(i),
-        'text-white': !isActive(i)
+        'text-[#ffbd20] border-b-2 border-[#ffbd20]': i === activeTab(),
+        'text-white': i !== activeTab()
       }"
       (click)="setTab(i)"
     >
-      {{ formatTitle(tab) }}
+      {{ formatTitle(title) }}
     </button>
   </div>
 
-  <!-- Tab Panel -->
-  <div class="bg-[#2d2d2d] rounded shadow-lg">
-    <ng-container *ngComponentOutlet="components[activeTab]"></ng-container>
+  <!-- Panel -->
+  <div class="bg-[#2d2d2d] p-4 rounded shadow-lg">
+    <ng-container
+      *ngComponentOutlet="activeComponent(); inputs: activeInputs()"
+    ></ng-container>
   </div>
 </div>

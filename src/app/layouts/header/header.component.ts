@@ -23,8 +23,12 @@ export class HeaderComponent {
       url: '/post-job',
     },
     {
-      name: 'about',
-      url: '/about',
+      name: 'Posted Job',
+      url: '/posted-job',
+    },
+    {
+      name: 'Job History',
+      url: '/job-history',
     },
   ];
 }

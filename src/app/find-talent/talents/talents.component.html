@@ -6,9 +6,5 @@
   </div>
 
   <!-- displaying the talents -->
-  <div class="flex flex-wrap gap-5 mt-10 justify-around">
-    @for(talent of talentsData;track $index){
-    <app-talent-card [talent]="talent" />
-    }
-  </div>
+  <app-talents-list />
 </div>
