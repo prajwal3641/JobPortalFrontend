@@ -10,6 +10,7 @@ import { CompanyProfileComponent } from './company-profile/company-profile.compo
 import { PostedJobComponent } from './posted-job/posted-job.component';
 import { JobHistoryPageComponent } from './job-history-page/job-history-page.component';
 import { SignupLoginPageComponent } from './signup-login-page/signup-login-page.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 export const routes: Routes = [
   {
@@ -63,6 +64,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    component: HomeComponent,
+    component: PageNotFoundComponent,
   },
 ];
