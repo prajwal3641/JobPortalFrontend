@@ -11,6 +11,7 @@ import {
   computed,
   input,
   signal,
+  effect,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
@@ -40,7 +41,14 @@ export class MultiInputSearchingComponent implements AfterViewChecked {
 
   @ViewChild('searchBox') searchBoxRef!: ElementRef<HTMLInputElement>;
 
-  constructor(private elRef: ElementRef) {}
+  constructor(private elRef: ElementRef) {
+    effect(() => {
+      const items = this.filteredItems();
+      if (items.length === 0 || this.highlightedIndex() >= items.length) {
+        this.highlightedIndex.set(-1);
+      }
+    });
+  }
 
   @HostListener('document:click', ['$event'])
   closeIfClickedOutside(event: MouseEvent) {
@@ -129,18 +137,29 @@ export class MultiInputSearchingComponent implements AfterViewChecked {
       event.preventDefault();
       this.highlightedIndex.set((index - 1 + items.length) % items.length);
     } else if (event.key === 'Enter') {
-      const selected = items[this.highlightedIndex()];
-      if (selected) {
-        this.selectItem(selected);
+      event.preventDefault();
+
+      const exactMatch = items.find(
+        (item) => item.toLowerCase() === searchText.toLowerCase()
+      );
+
+      if (exactMatch) {
+        this.selectItem(exactMatch);
+      } else if (items[index]) {
+        this.selectItem(items[index]);
       } else if (searchText) {
         this.addItemFromSearch();
       }
+
       this.search.set('');
-      this.highlightedIndex.set(-1);
-      event.preventDefault();
+      const currentItems = this.filteredItems();
+      if (index >= currentItems.length) {
+        this.highlightedIndex.set(currentItems.length - 1);
+      } else {
+        this.highlightedIndex.set(index); // 🔥 keep highlight
+      }
     }
 
-    // 🛠️ Fix input freeze
     setTimeout(() => {
       this.searchBoxRef?.nativeElement.focus();
     }, 0);
