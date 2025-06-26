@@ -18,7 +18,8 @@
       type="text"
       class="bg-transparent outline-none w-full text-sm placeholder-[#a0a0a0]"
       placeholder="{{ field.placeholder }}"
-      [(ngModel)]="search"
+      [ngModel]="search()"
+      (ngModelChange)="search.set($event); highlightedIndex.set(-1)"
     />
 
     <!-- Up & Down Arrows -->
@@ -36,7 +37,11 @@
     @for (opt of filteredOptions(); track opt) {
     <div
       (click)="selectOption(opt)"
-      class="px-3 py-2 text-sm hover:bg-[#3d3d3d] cursor-pointer"
+      class="px-3 py-2 text-sm cursor-pointer"
+      [ngClass]="{
+        'bg-[#ffbd20] text-black': highlightedIndex() === $index,
+        'hover:bg-[#3d3d3d]': highlightedIndex() !== $index
+      }"
     >
       {{ opt }}
     </div>
