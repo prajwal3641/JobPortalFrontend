@@ -9,6 +9,7 @@ import { ApplyJobComponent } from './apply-job/apply-job.component';
 import { CompanyProfileComponent } from './company-profile/company-profile.component';
 import { PostedJobComponent } from './posted-job/posted-job.component';
 import { JobHistoryPageComponent } from './job-history-page/job-history-page.component';
+import { SignupLoginPageComponent } from './signup-login-page/signup-login-page.component';
 
 export const routes: Routes = [
   {
@@ -52,8 +53,16 @@ export const routes: Routes = [
     path: 'job-history',
     component: JobHistoryPageComponent,
   },
-  // {
-  //   path: '**',
-  //   component:
-  // }
+  {
+    path: 'sign-up',
+    component: SignupLoginPageComponent,
+  },
+  {
+    path: 'login',
+    component: SignupLoginPageComponent,
+  },
+  {
+    path: '**',
+    component: HomeComponent,
+  },
 ];

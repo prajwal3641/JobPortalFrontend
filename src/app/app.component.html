@@ -1,6 +1,6 @@
 <div class="min-h-[100vh] bg-[#2d2d2d] font-['poppins']">
-  <app-header />
-  <hr class="border border-[#474643] my-2" />
+  <app-header *ngIf="showLayout" />
+  <hr *ngIf="showLayout" class="border border-[rgb(71,70,67)] my-2" />
   <router-outlet />
-  <app-footer />
+  <app-footer *ngIf="showLayout" />
 </div>

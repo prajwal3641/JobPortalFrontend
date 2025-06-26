@@ -1,0 +1,33 @@
+<div class="bg-[#2d2d2d] px-20 flex flex-col gap-2">
+  <div class="text-2xl font-semibold flex justify-center">Login</div>
+
+  <app-input-field
+    label="Email"
+    type="email"
+    placeholder="Your Email"
+    [required]="true"
+  />
+  <app-input-field
+    label="Password"
+    type="password"
+    placeholder="Password"
+    [required]="true"
+  />
+
+  <!-- Login button -->
+  <div>
+    <button
+      class="w-full font-semibold px-4 py-2 rounded bg-[#ffbd20] text-[#3d3d3d] border border-[#ffbd20] hover:bg-[#f99b07] hover:text-white transition duration-200"
+    >
+      Login
+    </button>
+  </div>
+
+  <!-- dont have account div -->
+  <div class="m-auto">
+    Don't have an Account?
+    <a href="" routerLink="/sign-up" class="text-[#ffbd20] hover:underline"
+      >Sign up</a
+    >
+  </div>
+</div>

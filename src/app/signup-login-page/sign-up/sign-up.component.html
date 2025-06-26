@@ -1,0 +1,46 @@
+<div class="bg-[#2d2d2d] px-20 flex flex-col gap-2">
+  <div class="text-2xl font-semibold flex justify-center">Create Account</div>
+  <app-input-field
+    label="Full Name"
+    type="text"
+    placeholder="Your Name"
+    [required]="true"
+  />
+  <app-input-field
+    label="Email"
+    type="email"
+    placeholder="Your Email"
+    [required]="true"
+  />
+  <app-input-field
+    label="Enter Password"
+    type="password"
+    placeholder="Password"
+    [required]="true"
+  />
+  <app-input-field
+    label="Confirm Password"
+    type="password"
+    placeholder="Confirm Password"
+    [required]="true"
+  />
+  <!-- need to add check box -->
+  <app-input-field type="checkbox" [required]="true" label="" />
+
+  <!-- signup button -->
+  <div>
+    <button
+      class="w-full font-semibold px-4 py-2 rounded bg-[#ffbd20] text-[#3d3d3d] border border-[#ffbd20] hover:bg-[#f99b07] hover:text-white transition duration-200"
+    >
+      Sign up
+    </button>
+  </div>
+
+  <!-- already login div -->
+  <div class="m-auto">
+    Have an Account?
+    <a href="" routerLink="/login" class="text-[#ffbd20] hover:underline"
+      >Login</a
+    >
+  </div>
+</div>

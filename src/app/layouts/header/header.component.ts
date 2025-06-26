@@ -30,5 +30,13 @@ export class HeaderComponent {
       name: 'Job History',
       url: '/job-history',
     },
+    {
+      name: 'Sign Up',
+      url: '/sign-up',
+    },
+    {
+      name: 'Login',
+      url: '/login',
+    },
   ];
 }
