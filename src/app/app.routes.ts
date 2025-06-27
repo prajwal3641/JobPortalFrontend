@@ -11,6 +11,7 @@ import { PostedJobComponent } from './posted-job/posted-job.component';
 import { JobHistoryPageComponent } from './job-history-page/job-history-page.component';
 import { SignupLoginPageComponent } from './signup-login-page/signup-login-page.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ProfilePageComponent } from './profile-page/profile-page.component';
 
 export const routes: Routes = [
   {
@@ -61,6 +62,10 @@ export const routes: Routes = [
   {
     path: 'login',
     component: SignupLoginPageComponent,
+  },
+  {
+    path: 'profile',
+    component: ProfilePageComponent,
   },
   {
     path: '**',

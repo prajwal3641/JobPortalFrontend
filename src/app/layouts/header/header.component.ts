@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { ProfileComponent } from '../../talent-profile/profile/profile.component';
+import { ProfileMenuComponent } from '../../header/profile-menu/profile-menu.component';
 
 @Component({
   selector: 'app-header',
-  imports: [MatIconModule, RouterLink, RouterLinkActive],
+  imports: [MatIconModule, RouterLink, RouterLinkActive, ProfileMenuComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })

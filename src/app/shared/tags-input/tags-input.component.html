@@ -23,7 +23,7 @@
     <input
       class="bg-transparent py-2 text-white outline-none placeholder-[#a0a0a0] text-sm flex-grow min-w-[100px]"
       type="text"
-      [placeholder]="tags().length === 0 ? placeholder : ''"
+      [placeholder]="tags().length > 0 ? placeholder : placeholder"
       [(ngModel)]="inputValue"
       (keydown)="handleKey($event)"
       (blur)="onBlur()"

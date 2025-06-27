@@ -10,14 +10,21 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './tags-input.component.css',
 })
 export class TagsInputComponent {
-  label = input<string>('Tags');
+  label = input<string>('');
   @Input() placeholder = 'Enter tag';
   @Input() splitChars: string[] = [',', ' ', '|'];
 
   @Input() required = false;
 
+  // if i want a list of tags as a input , optional (to handle profile page skills edit part)
+  @Input() inputTags: string[] = [];
+
   tags = signal<string[]>([]);
   inputValue = signal('');
+
+  ngOnInit() {
+    this.tags.set(this.inputTags);
+  }
 
   addTag(tag: string) {
     const trimmed = tag.trim();

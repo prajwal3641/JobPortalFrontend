@@ -1,0 +1,55 @@
+<div
+  class="w-full dropdown-container relative text-white font-['poppins'] font-medium"
+>
+  <!-- Label -->
+  <label class="block mb-1 text-md text-[#f1f1f1]">
+    {{ field.label }}
+    @if (required) {
+    <span class="text-red-500">*</span>
+    }
+  </label>
+
+  <!-- Input Box -->
+  <div
+    class="flex gap-2 items-center justify-between border border-[#555] focus-within:border-[#ffbd20] bg-[#2d2d2d] px-3 py-2 rounded-md cursor-pointer"
+    (click)="toggleDropdown()"
+  >
+    <!-- left Section image -->
+    <img class="w-6 h-6" [src]="field.leftSection" alt="" />
+    <input
+      type="text"
+      class="bg-transparent outline-none w-full text-sm placeholder-[#a0a0a0]"
+      placeholder="{{ field.placeholder }}"
+      [ngModel]="search()"
+      (ngModelChange)="search.set($event); highlightedIndex.set(-1)"
+    />
+
+    <!-- Up & Down Arrows -->
+    <div class="flex flex-col ml-2 text-[#ffbd20] text-xs">
+      <span>&uarr;</span>
+      <span>&darr;</span>
+    </div>
+  </div>
+
+  <!-- Dropdown -->
+  @if (dropdownOpen()) {
+  <div
+    class="absolute w-full mt-1 max-h-48 overflow-auto bg-[#2d2d2d] border border-[#555] rounded z-50 shadow-md"
+  >
+    @for (opt of filteredOptions(); track opt) {
+    <div
+      (click)="selectOption(opt)"
+      class="px-3 py-2 text-sm cursor-pointer"
+      [ngClass]="{
+        'bg-[#ffbd20] text-black': highlightedIndex() === $index,
+        'hover:bg-[#3d3d3d]': highlightedIndex() !== $index
+      }"
+    >
+      {{ opt }}
+    </div>
+    } @if (filteredOptions().length === 0) {
+    <div class="px-3 py-2 text-sm text-[#999]">No match found</div>
+    }
+  </div>
+  }
+</div>

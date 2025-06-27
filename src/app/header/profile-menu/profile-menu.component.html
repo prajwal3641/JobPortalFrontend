@@ -1,0 +1,84 @@
+<div class="relative profile-menu-container font-['poppins']">
+  <!-- Avatar Button -->
+  <div
+    class="cursor-pointer flex gap-3 items-center p-2 rounded-xl hover:bg-[#3a3a3a]"
+    (click)="toggleDropdown()"
+  >
+    <div>marshal</div>
+
+    <img
+      src="assets/avatar.png"
+      alt="Profile"
+      class="w-10 h-10 rounded-full object-cover border-2 border-[#584940]"
+    />
+  </div>
+
+  <!-- Dropdown Menu -->
+  @if (dropdownOpen()) {
+  <div
+    class="absolute right-0 mt-2 min-w-50 bg-[#2d2d2d] text-[#b0b0b0] rounded-md shadow-lg z-50 overflow-hidden border border-[#555555]"
+  >
+    <div
+      routerLink="/profile"
+      class="flex items-center gap-3 px-4 py-2 hover:bg-[#3a3a3a] cursor-pointer"
+    >
+      <img class="h-6 w-6" src="assets/profile-menu/profile.png" alt="" />
+      <span>Profile</span>
+    </div>
+    <div
+      class="flex items-center gap-3 px-4 py-2 hover:bg-[#3a3a3a] cursor-pointer"
+    >
+      <img class="h-6 w-6" src="assets/profile-menu/message.png" alt="" />
+      <span>Messages</span>
+    </div>
+    <div
+      class="flex items-center gap-3 px-4 py-2 hover:bg-[#3a3a3a] cursor-pointer"
+    >
+      <img class="h-6 w-6" src="assets/profile-menu/file.png" alt="" />
+      <span>Resume</span>
+    </div>
+
+    <!-- Theme Toggle -->
+    <div
+      class="flex justify-between items-center px-4 py-2 hover:bg-[#3a3a3a] cursor-pointer"
+      (click)="toggleTheme()"
+    >
+      <div class="flex gap-2 items-center">
+        <img
+          *ngIf="!isDarkMode()"
+          class="h-6 w-6"
+          src="assets/profile-menu/moon.png"
+          alt=""
+        />
+        <img
+          *ngIf="isDarkMode()"
+          class="h-6 w-6"
+          src="assets/profile-menu/sun.png"
+          alt=""
+        />
+        <span>{{ isDarkMode() ? "Light Mode" : "DarkMode" }}</span>
+      </div>
+      <div class="relative w-10 h-5 bg-[#555] rounded-full">
+        <div
+          class="absolute top-0.5 left-0.5 w-4 h-4 rounded-full transition-transform transform"
+          [class.translate-x-5]="isDarkMode()"
+          [ngClass]="{
+            'bg-[#ffbd20]': isDarkMode(),
+            'bg-white': !isDarkMode()
+          }"
+        ></div>
+      </div>
+    </div>
+
+    <hr class="border-t border-[#444]" />
+
+    <!-- Logout -->
+    <div
+      class="flex items-center gap-2 px-4 py-2 hover:bg-[#3a3a3a] cursor-pointer text-red-500"
+    >
+      <img class="h-6 w-6" src="assets/profile-menu/logout.png" alt="" />
+      <span>Logout</span>
+    </div>
+  </div>
+  }
+</div>

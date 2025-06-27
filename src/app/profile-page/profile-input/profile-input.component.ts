@@ -1,5 +1,5 @@
+import { Component } from '@angular/core';
 import {
-  Component,
   Input,
   signal,
   computed,
@@ -9,31 +9,37 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ProfileFeilds } from '../../Data/Profile';
 
 @Component({
-  selector: 'app-dropdown-search-input',
-  standalone: true,
+  selector: 'app-profile-input',
   imports: [CommonModule, FormsModule],
-  templateUrl: './dropdown-search-input.component.html',
-  styleUrl: './dropdown-search-input.component.css',
+  templateUrl: './profile-input.component.html',
+  styleUrl: './profile-input.component.css',
 })
-export class DropdownSearchInputComponent implements AfterViewChecked {
-  @Input() field: {
-    label: string;
-    placeholder: string;
-    options: string[];
-  } = {
+export class ProfileInputComponent {
+  @Input() field: ProfileFeilds = {
     label: '',
     placeholder: '',
     options: [],
+    value: '',
+    leftSection: '',
   };
 
   @Input() required = false;
 
   dropdownOpen = signal(false);
-  search = signal('');
+  search = signal('scdsdc');
   selected = signal('');
   highlightedIndex = signal<number>(-1);
+
+  ngOnInit(): void {
+    const first = this.field.options[0];
+    if (first) {
+      this.selected.set(first);
+      this.search.set(first);
+    }
+  }
 
   constructor(private elRef: ElementRef) {}
 

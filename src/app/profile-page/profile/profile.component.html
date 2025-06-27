@@ -1,0 +1,277 @@
+<div class="w-4/5 mx-auto mt-10">
+  <!-- banner image and profile image   -->
+  <div class="relative">
+    <img
+      class="rounded-t-2xl"
+      src="assets/Profile/banner.jpg"
+      alt="banner image"
+    />
+    <img
+      class="absolute -bottom-14 left-3 h-48 w-48 border-8 border-[#2d2d2d] rounded-full"
+      src="assets/avatar.png"
+      alt="banner image"
+    />
+  </div>
+
+  <!-- profile info -->
+  <div class="flex flex-col gap-1 px-3 mt-16 text-[#d1d1d1]">
+    <!-- name and edit and save icon -->
+    <div class="flex justify-between items-center">
+      <div class="text-3xl font-semibold">{{ profile.name }}</div>
+      <div
+        (click)="handleEdit(0)"
+        class="rounded-full hover:bg-[#4b4635] p-2 cursor-pointer"
+      >
+        <!-- if want  to edit  -->
+        <img
+          *ngIf="!edit()[0]"
+          class="h-7 w-7"
+          src="assets/edit-profile/pencil.png"
+          alt="edit-pencil"
+        />
+        <!-- if want to save -->
+        <img
+          *ngIf="edit()[0]"
+          class="h-7 w-7"
+          src="assets/edit-profile/save.png"
+          alt="edit-pencil"
+        />
+      </div>
+    </div>
+
+    <!-- Dynamically update based on edit -->
+    @if(!edit()[0]){
+    <!-- role , company , location information -->
+    <div class="text-xl">{{ profile.role }} &bull; {{ profile.company }}</div>
+    <div>
+      <span class="flex items-center gap-1 text-[#888888] text-md">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="#888888"
+          viewBox="0 0 24 24"
+          stroke="#888888"
+          class="h-5 w-5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z"
+          />
+        </svg>
+
+        {{ profile.location }}
+      </span>
+    </div>
+    }@else {
+    <div class="[&>*]:w-1/2 flex justify-between gap-4">
+      <div><app-profile-input [field]="fields[0]" [required]="true" /></div>
+      <div><app-profile-input [field]="fields[1]" [required]="true" /></div>
+    </div>
+    <app-profile-input [field]="fields[2]" [required]="true" />
+    }
+  </div>
+
+  <hr class="border border-[#474643] my-8 mx-3" />
+
+  <!-- About section -->
+  <div class="px-3">
+    <!-- name and edit and save icon -->
+    <div
+      class="text-2xl mb-1 font-semibold text-[#d1d1d1] flex items-center justify-between"
+    >
+      <div>About</div>
+      <div
+        (click)="handleEdit(1)"
+        class="rounded-full hover:bg-[#4b4635] p-2 cursor-pointer"
+      >
+        <!-- if want  to edit  -->
+        <img
+          *ngIf="!edit()[1]"
+          class="h-7 w-7"
+          src="assets/edit-profile/pencil.png"
+          alt="edit-pencil"
+        />
+        <!-- if want to save -->
+        <img
+          *ngIf="edit()[1]"
+          class="h-7 w-7"
+          src="assets/edit-profile/save.png"
+          alt="edit-pencil"
+        />
+      </div>
+    </div>
+
+    @if(!edit()[1]){
+    <div class="text-sm text-[#b0b0b0] text-justify">
+      {{ profile.about }}
+    </div>
+    }@else {
+    <!-- we can add component also , but rn i am giving just normal input -->
+    <div class="w-full">
+      <textarea
+        class="bg-[#2d2d2d] text-white p-3 rounded border border-[#555555] hover:border-[#ffbd20] focus:border-[#ffbd20] focus:outline-none transition-all appearance-none resize-none cursor-default w-full"
+        placeholder="Enter About youself....."
+        required="true"
+        [style.minHeight.px]="7 * 24"
+        [(ngModel)]="profile.about"
+      ></textarea>
+    </div>
+    }
+  </div>
+
+  <hr class="border border-[#474643] my-6 mx-3" />
+
+  <!-- Skills section -->
+  <div class="px-3">
+    <!-- name and edit icon and save icon -->
+    <div
+      class="text-2xl mb-1 font-semibold text-[#d1d1d1] flex items-center justify-between"
+    >
+      <div>Skills</div>
+      <div
+        (click)="handleEdit(2)"
+        class="rounded-full hover:bg-[#4b4635] p-2 cursor-pointer"
+      >
+        <!-- if want  to edit  -->
+        <img
+          *ngIf="!edit()[2]"
+          class="h-7 w-7"
+          src="assets/edit-profile/pencil.png"
+          alt="edit-pencil"
+        />
+        <!-- if want to save -->
+        <img
+          *ngIf="edit()[2]"
+          class="h-7 w-7"
+          src="assets/edit-profile/save.png"
+          alt="edit-pencil"
+        />
+      </div>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <!-- skill use for loop -->
+      @if(!edit()[2]){ @for(skill of profile.skills;track $index){
+      <div
+        class="bg-[#ffd149]/15 text-[#ffbd20] rounded-3xl px-3 py-1 font-medium"
+      >
+        {{ skill }}
+      </div>
+      } }@else {
+      <div class="w-full">
+        <app-tags-input
+          placeholder="Add a skill"
+          [inputTags]="profile.skills"
+        />
+      </div>
+      }
+    </div>
+  </div>
+
+  <hr class="border border-[#474643] my-6 mx-3" />
+
+  <!-- Experience section -->
+  <div class="px-3">
+    <!-- title and edit and save icon -->
+    <div
+      class="text-2xl font-semibold mb-5 text-[#d1d1d1] flex justify-between items-center"
+    >
+      <div>Experience</div>
+
+      <!-- images-->
+      <div class="flex">
+        <div class="rounded-full p-2 hover:bg-[#4b4635] cursor-pointer">
+          <!-- if want  to edit  -->
+          <img
+            (click)="toggleAddExp()"
+            class="h-7 w-7"
+            src="assets/edit-profile/plus.png"
+            alt="plus -pencil"
+          />
+        </div>
+        <div class="rounded-full p-2 hover:bg-[#4b4635] cursor-pointer">
+          <!-- if want  to edit  -->
+          <img
+            (click)="handleEdit(3)"
+            *ngIf="!edit()[3]"
+            class="h-7 w-7 hover:bg-[#4b4635]"
+            src="assets/edit-profile/pencil.png"
+            alt="edit-pencil"
+          />
+          <!-- if want to save -->
+          <img
+            (click)="handleEdit(3)"
+            *ngIf="edit()[3]"
+            class="h-7 w-7"
+            src="assets/edit-profile/save.png"
+            alt="edit-pencil"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-8">
+      @for(experience of profile.experience;track $index){
+      <app-experience-card [experience]="experience" [edit]="edit()[3]" />
+      }
+
+      <!-- add a new exp section -->
+      @if(addExp){
+      <app-experience-card-input [add]="true" [(addExp)]="addExp" />
+      }
+    </div>
+  </div>
+
+  <hr class="border border-[#474643] my-6 mx-3" />
+
+  <!-- Certifications section -->
+  <div class="px-3">
+    <div
+      class="text-2xl font-semibold mb-5 text-[#d1d1d1] flex justify-between items-center"
+    >
+      <div>Certifications</div>
+      <div class="flex">
+        <div class="rounded-full p-2 hover:bg-[#4b4635] cursor-pointer">
+          <!-- if want  to edit  -->
+          <img
+            (click)="toggleAddCerti()"
+            class="h-7 w-7"
+            src="assets/edit-profile/plus.png"
+            alt="plus -pencil"
+          />
+        </div>
+        <div class="rounded-full p-2 hover:bg-[#4b4635] cursor-pointer">
+          <!-- if want  to edit  -->
+          <img
+            (click)="handleEdit(4)"
+            *ngIf="!edit()[4]"
+            class="h-7 w-7"
+            src="assets/edit-profile/pencil.png"
+            alt="edit-pencil"
+          />
+          <!-- if want to save -->
+          <img
+            (click)="handleEdit(4)"
+            *ngIf="edit()[4]"
+            class="h-7 w-7"
+            src="assets/edit-profile/save.png"
+            alt="edit-pencil"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col gap-8">
+      @for(certification of profile.certifications;track $index){
+      <app-certification-card
+        [certification]="certification"
+        [edit]="edit()[4]"
+      />
+      }
+
+      <!-- take input if plus icon is clicked -->
+      @if(addCerti){
+      <app-certification-card-input [(addCerti)]="addCerti" />
+      }
+    </div>
+  </div>
+</div>
