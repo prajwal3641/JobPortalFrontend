@@ -1,16 +1,20 @@
-<div class="flex flex-col gap-1 mb-4">
-  @if (label && !(type==='checkbox')) {
+<div class="flex flex-col gap-1 mb-2">
+  <!-- Label (if exists and not checkbox) -->
+  @if (label && !(type === 'checkbox')) {
   <label class="text-[#d1d1d1] text-md font-medium">
     {{ label }}
     @if (required) {
     <span class="text-rose-500">*</span>
     }
   </label>
-  } @if (type === 'textarea') {
+  }
+
+  <!-- Textarea -->
+  @if (type === 'textarea') {
   <textarea
     class="bg-[#2d2d2d] text-white p-3 rounded border border-[#555555] hover:border-[#ffbd20] focus:border-[#ffbd20] focus:outline-none transition-all appearance-none resize-none"
     [ngClass]="[
-      'text-white transition-all focus:outline-none appearance-none resize-none  placeholder:text-gray-400 placeholder:text-sm',
+      'text-white transition-all focus:outline-none appearance-none resize-none placeholder:text-gray-400 placeholder:text-sm',
       readOnly === true
         ? 'bg-transparent p-0 border-none cursor-default'
         : 'bg-[#2d2d2d] p-3 rounded border border-[#555555] hover:border-[#ffbd20] focus:border-[#ffbd20]'
@@ -18,14 +22,17 @@
     [attr.placeholder]="placeholder"
     [required]="required"
     [style.minHeight.px]="minRows * 24"
-    [(ngModel)]="value"
+    [value]="value"
+    (input)="onInputChange($event)"
     [readonly]="readOnly"
   ></textarea>
-  }@else if (type === 'file') {
+  }
+
+  <!-- File input -->
+  @else if (type === 'file') {
   <label
     [ngClass]="[
-      'flex items-center justify-between gap-2 text-white transition-all  placeholder:text-gray-400 placeholder:text-sm',
-
+      'flex items-center justify-between gap-2 text-white transition-all placeholder:text-gray-400 placeholder:text-sm',
       readOnly === true
         ? 'bg-transparent p-0 border-none cursor-default'
         : 'bg-[#2d2d2d] p-3 rounded border border-[#555555] hover:border-[#ffbd20] cursor-pointer'
@@ -57,10 +64,11 @@
           d="M15 7l-6.5 6.5a1.5 1.5 0 0 0 3 3l6.5 -6.5a3 3 0 0 0 -6 -6l-6.5 6.5a4.5 4.5 0 0 0 9 9l6.5 -6.5"
         />
       </svg>
-      <span class="text-gray-400 text-sm">{{
-        value?.name || "Choose File"
-      }}</span>
+      <span class="text-gray-400 text-sm">
+        {{ value?.name || "Choose File" }}
+      </span>
     </div>
+
     @if (value && !readOnly) {
     <button
       type="button"
@@ -72,19 +80,21 @@
     }
   </label>
   }
-  <!-- for checkbox -->
 
-  @else if(type==='checkbox'){
+  <!-- Checkbox -->
+  @else if (type === 'checkbox') {
   <div class="flex items-center gap-2 p-1">
     <input
       type="checkbox"
-      [(ngModel)]="value"
+      [checked]="value"
+      (change)="onCheckboxChange($event)"
       [required]="required"
       class="w-4 h-4 accent-[#ffbd20]"
       [readonly]="readOnly"
     />
     <label class="text-white text-sm cursor-pointer select-none">
-      {{ label }} <span *ngIf="!label && label.length === 0">I accept </span>
+      {{ label }}
+      <span *ngIf="!label && label.length === 0">I accept </span>
       <a
         *ngIf="!label && label.length === 0"
         class="text-[#ffbd20]"
@@ -94,36 +104,34 @@
       <span *ngIf="required" class="text-rose-500">*</span>
     </label>
   </div>
+  }
 
-  } @else {
-
-  <!--  -->
-
-  <!--  -->
+  <!-- All other input types -->
+  @else {
   <div
     tabindex="0"
     [ngClass]="[
-      'flex items-center  px-2',
+      'flex items-center px-2',
       readOnly === true
         ? 'bg-transparent border-none p-0'
-        : 'border border-[#555555] hover:border-[#ffbd20] outline-none  rounded-lg focus-within:border-[#ffbd20]'
+        : 'border border-[#555555] hover:border-[#ffbd20] outline-none rounded-lg focus-within:border-[#ffbd20]'
     ]"
   >
-    <!-- if password add a lock item -->
+    <!-- Icon: lock or @ -->
     <img
       *ngIf="type === 'password'"
       class="w-4 h-4"
       src="assets/lock.png"
       alt=""
     />
-    <!-- for email  -->
     <img *ngIf="type === 'email'" class="w-4 h-4" src="assets/@.png" alt="" />
+
     <input
       [ngClass]="[
         'transition-all focus:outline-none appearance-none placeholder:text-gray-400 placeholder:text-sm text-white w-full',
         readOnly === true
           ? 'bg-transparent border-none p-0'
-          : 'bg-[#2d2d2d] p-2 rounded '
+          : 'bg-[#2d2d2d] p-2 rounded'
       ]"
       [class.number-to-text]="type === 'number'"
       [type]="inputType"
@@ -131,11 +139,12 @@
       [required]="required"
       [attr.min]="type === 'number' ? min : null"
       [attr.max]="type === 'number' ? max : null"
-      [ngModel]="value"
+      [value]="value"
+      (input)="onInputChange($event)"
       [readonly]="readOnly"
     />
 
-    <!-- eye toggle for password -->
+    <!-- Show/hide password -->
     <svg
       *ngIf="type === 'password'"
       (click)="togglePassword()"

@@ -1,6 +1,19 @@
+<app-notification
+  class="z-50"
+  [title]="notification.title"
+  [message]="notification.message"
+  [type]="notification.type"
+  [show]="notification.show"
+/>
 <div
-  class="min-h-[90vh] text-[#d1d1d1] bg-[#2d2d2d] font-['poppins'] overflow-hidden"
+  class="min-h-[90vh] text-[#d1d1d1] bg-[#2d2d2d] font-['poppins'] overflow-hidden relative"
 >
+  <button
+    routerLink="/"
+    class="absolute z-10 top-4 left-4 rounded px-4 py-2 text-[#ffbd20] bg-[#ffbd2033] hover:bg-[#ffbd204d] transition"
+  >
+    &#8592; Home
+  </button>
   <!-- main div -->
   <div
     class="w-[100vw] h-[100vh] transition-all ease-in-out duration-1000 flex [&>*]:flex-shrink-0"
@@ -11,7 +24,7 @@
   >
     <!-- login section -->
     <div class="w-1/2 flex flex-col justify-center">
-      <app-login />
+      <app-login (notification)="showNotification($event)" />
     </div>
     <!-- left section -->
     <div
@@ -46,7 +59,7 @@
 
     <!--  -->
     <div class="w-1/2 flex flex-col justify-center">
-      <app-sign-up />
+      <app-sign-up (notification)="showNotification($event)" />
     </div>
   </div>
 </div>

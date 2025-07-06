@@ -1,5 +1,5 @@
 import { NgClass, NgIf } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -9,44 +9,60 @@ import { FormsModule } from '@angular/forms';
   imports: [FormsModule, NgClass, NgIf],
 })
 export class InputFieldComponent {
-  @Input() type: string = 'text'; // 'text', 'number', 'email', 'file', 'textarea'
+  @Input() type: string = 'text'; // 'text', 'number', 'email', 'file', 'textarea', 'checkbox'
   @Input() label: string = '';
   @Input() placeholder: string = 'Enter value';
   @Input() required: boolean = false;
   @Input() readOnly: boolean = false;
-
   @Input() min?: number;
   @Input() max?: number;
-
   @Input() minRows: number = 2;
 
-  value: any = null;
+  // ngModel binding
+  @Input() value: any;
+  @Output() valueChange = new EventEmitter<any>();
 
-  // for password toggle
-  showPassword = false;
-  // ngOnChanges() {
-  //   console.log('inppt' + this.readOnly);
-  // }
-
-  onFileChange(event: Event): void {
-    const file = (event.target as HTMLInputElement).files?.[0];
-    if (file) {
-      this.value = file;
-    }
+  ngOnInit() {
+    this.value = '';
   }
 
-  removeFile(input: HTMLInputElement): void {
-    this.value = null;
-    input.value = ''; // reset the input to allow re-selecting the same file
-  }
+  // Password toggle
+  showPassword: boolean = false;
 
-  togglePassword() {
-    this.showPassword = !this.showPassword;
-  }
   get inputType(): string {
     if (this.type === 'password') {
       return this.showPassword ? 'text' : 'password';
     }
     return this.type;
+  }
+
+  togglePassword(): void {
+    this.showPassword = !this.showPassword;
+  }
+
+  onInputChange(event: Event): void {
+    const target = event.target as HTMLInputElement | HTMLTextAreaElement;
+    this.value = target.value;
+    this.valueChange.emit(this.value);
+  }
+
+  onCheckboxChange(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    this.value = target.checked;
+    this.valueChange.emit(this.value);
+  }
+
+  onFileChange(event: Event): void {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) {
+      this.value = file;
+      this.valueChange.emit(this.value);
+    }
+  }
+
+  removeFile(input: HTMLInputElement): void {
+    this.value = null;
+    input.value = '';
+    this.valueChange.emit(this.value);
   }
 }

@@ -1,36 +1,105 @@
-<div class="bg-[#2d2d2d] px-20 flex flex-col gap-2">
+<div class="bg-[#2d2d2d] px-20 flex flex-col gap-1 relative">
   <div class="text-2xl font-semibold flex justify-center">Create Account</div>
   <app-input-field
     label="Full Name"
     type="text"
     placeholder="Your Name"
     [required]="true"
+    [(value)]="form.name"
+    (valueChange)="
+      formError.name = formValidators.validateField('name', $event)
+    "
   />
+  <small *ngIf="formError.name" class="text-red-700 text-xs">{{
+    formError.name
+  }}</small>
   <app-input-field
     label="Email"
     type="email"
     placeholder="Your Email"
     [required]="true"
+    [(value)]="form.email"
+    (valueChange)="
+      formError.email = formValidators.validateField('email', $event)
+    "
   />
+  <small *ngIf="formError.email" class="text-red-700 text-xs">{{
+    formError.email
+  }}</small>
+
   <app-input-field
     label="Enter Password"
     type="password"
     placeholder="Password"
     [required]="true"
+    [(value)]="form.password"
+    (valueChange)="validatePassword($event)"
   />
+
+  <small *ngIf="formError.password" class="text-red-700 text-xs">{{
+    formError.password
+  }}</small>
   <app-input-field
     label="Confirm Password"
     type="password"
     placeholder="Confirm Password"
     [required]="true"
+    [(value)]="form.confirmPassword"
+    (valueChange)="
+      formError.confirmPassword = formValidators.validateField(
+        'confirmPassword',
+        $event,
+        { password: form.password }
+      )
+    "
   />
+
+  <small *ngIf="formError.confirmPassword" class="text-red-700 text-xs">{{
+    formError.confirmPassword
+  }}</small>
+
+  <!-- select between employer and applicant  -->
+
+  <div class="mb-2">
+    <label class="block text-md font-medium text-[#d1d1d1] mb-2">
+      You are? <span class="text-red-600">*</span>
+    </label>
+
+    <div class="flex space-x-6">
+      <label class="inline-flex items-center">
+        <input
+          type="radio"
+          name="role"
+          [(ngModel)]="form.role"
+          value="APPLICANT"
+          required
+          class="h-4 w-4 text-[#ffbd20] accent-[#ffbd20] border border-[#d1d1d1]"
+        />
+        <span class="ml-2 text-[#d1d1d1]">Applicant</span>
+      </label>
+
+      <label class="inline-flex items-center">
+        <input
+          type="radio"
+          name="role"
+          [(ngModel)]="form.role"
+          value="EMPLOYER"
+          required
+          class="h-4 w-4 text-[#ffbd20] accent-[#ffbd20] border border-[#d1d1d1]"
+        />
+        <span class="ml-2 text-[#d1d1d1]">Employer</span>
+      </label>
+    </div>
+  </div>
   <!-- need to add check box -->
   <app-input-field type="checkbox" [required]="true" label="" />
 
   <!-- signup button -->
   <div>
     <button
-      class="w-full font-semibold px-4 py-2 rounded bg-[#ffbd20] text-[#3d3d3d] border border-[#ffbd20] hover:bg-[#f99b07] hover:text-white transition duration-200"
+      [disabled]="isFormInvalid()"
+      (click)="onSubmit()"
+      class="w-full font-semibold px-4 py-2 rounded bg-[#ffbd20] text-[#3d3d3d] border border-[#ffbd20] hover:bg-[#f99b07] hover:text-white transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
     >
       Sign up
     </button>
