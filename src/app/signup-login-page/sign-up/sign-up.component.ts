@@ -21,6 +21,7 @@ export class SignUpComponent {
   @Output() notification = new EventEmitter();
 
   formValidators = FormValidators;
+  showOverlay = false;
   // for role
   form = {
     name: '',
@@ -70,6 +71,7 @@ export class SignUpComponent {
     const { confirmPassword, ...dataToSend } = this.form;
     this.userService.registerUser(dataToSend).subscribe({
       next: (res) => {
+        this.showOverlay = true;
         // show success notification
         this.notification.emit({
           title: 'Registered Successfully',
@@ -89,18 +91,21 @@ export class SignUpComponent {
 
         // redirect to login page
         setTimeout(() => {
+          this.showOverlay = false;
           this.router.navigate(['/login'], {
             replaceUrl: true,
           });
-        }, 3300);
+        }, 3000);
       },
       error: (err) => {
+        this.showOverlay = false;
         this.notification.emit({
           title: 'Registration failed',
           message: err.error.errorMessage,
           type: 'error',
           show: true,
         });
+
         throw err;
       },
     });

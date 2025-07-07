@@ -264,4 +264,8 @@ export class ResetPasswordComponent {
       };
     }, 10); // ⏱️ gives Angular time to detect the transition
   }
+
+  onCancel() {
+    this.resetPasswordChange.emit(false);
+  }
 }

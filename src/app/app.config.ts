@@ -14,6 +14,10 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 
 import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
+import { provideStore, provideState } from '@ngrx/store';
+import { provideEffects } from '@ngrx/effects';
+import { userFeature } from './state/user/user.feature';
+import { UserEffects } from './state/user/user.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -30,5 +34,8 @@ export const appConfig: ApplicationConfig = {
     ),
     provideAnimations(),
     provideHttpClient(),
+    provideStore(),
+    provideState(userFeature),
+    provideEffects([UserEffects]),
   ],
 };

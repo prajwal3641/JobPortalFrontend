@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { ProfileComponent } from '../../talent-profile/profile/profile.component';
 import { ProfileMenuComponent } from '../../header/profile-menu/profile-menu.component';
+import { Observable } from 'rxjs';
+import { selectProfile, UserProfile } from '../../state/user/user.feature';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-header',
@@ -11,6 +14,12 @@ import { ProfileMenuComponent } from '../../header/profile-menu/profile-menu.com
   styleUrl: './header.component.css',
 })
 export class HeaderComponent {
+  // user$!: Observable<UserProfile | null>;
+  // private store = inject(Store);
+
+  // ngOnInit() {
+  //   this.user$ = this.store.select(selectProfile);
+  // }
   links = [
     {
       name: 'Find Jobs',
@@ -31,14 +40,6 @@ export class HeaderComponent {
     {
       name: 'Job History',
       url: '/job-history',
-    },
-    {
-      name: 'Sign Up',
-      url: '/sign-up',
-    },
-    {
-      name: 'Login',
-      url: '/login',
     },
   ];
 }
