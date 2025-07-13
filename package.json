@@ -33,6 +33,7 @@
     "dompurify": "^3.2.6",
     "dotenv": "^17.0.1",
     "jquery": "^3.7.1",
+    "lodash": "^4.17.21",
     "ngx-owl-carousel-o": "^20.0.0",
     "owl.carousel": "^2.3.4",
     "rxjs": "~7.8.0",

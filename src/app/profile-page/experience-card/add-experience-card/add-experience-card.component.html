@@ -1,24 +1,54 @@
-<div class="flex flex-col gap-3">
-  <div class="font-semibold text-[#d1d1d1] text-lg">
-    {{ add() ? "Add Experience" : "Edit Experience" }}
+@if(showOverlay){
+<!-- Loading Overlay -->
+<div
+  class="fixed inset-0 backdrop-blur-sm bg-black/30 flex items-center justify-center z-40 pointer-events-auto"
+>
+  <!-- Golden spinner + text -->
+  <div class="flex flex-col items-center gap-2">
+    <svg
+      class="animate-spin h-8 w-8 text-[#ffbd20]"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <circle
+        class="opacity-25"
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="currentColor"
+        stroke-width="4"
+      />
+      <path
+        class="opacity-75"
+        fill="currentColor"
+        d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+      />
+    </svg>
+    <p class="text-white text-sm">Please wait...</p>
   </div>
+</div>
+}
+
+<div class="flex flex-col gap-3">
+  <div class="font-semibold text-[#d1d1d1] text-lg">Add Experience</div>
 
   <!-- for first 2 inputs -->
   <div class="flex [&>*]:w-1/2 gap-4">
     <app-profile-input
-      [(value)]="experienceTemp.title"
+      [(value)]="experience.title"
       [field]="fields[0]"
       [required]="true"
     />
     <app-profile-input
-      [(value)]="experienceTemp.company"
+      [(value)]="experience.company"
       [field]="fields[1]"
       [required]="true"
     />
   </div>
   <div>
     <app-profile-input
-      [(value)]="experienceTemp.location"
+      [(value)]="experience.location"
       [field]="fields[2]"
       [required]="true"
     />
@@ -33,7 +63,7 @@
       placeholder="Enter Summary"
       required="true"
       [style.minHeight.px]="7 * 24"
-      [(ngModel)]="experienceTemp.description"
+      [(ngModel)]="experience.description"
     ></textarea>
   </div>
 
@@ -77,7 +107,7 @@
 
   <!-- when click on input make sure to disable the end date -->
   <app-input-field
-    [(value)]="experienceTemp.working"
+    [(value)]="experience.working"
     (valueChange)="makeDisableEndDate($event)"
     type="checkbox"
     [required]="true"
@@ -88,7 +118,7 @@
   <div class="flex mt-2 gap-4">
     <div>
       <button
-        (click)="saveExperience()"
+        (click)="addExperience()"
         class="px-5 py-1 rounded bg-[#3d3d3d] text-[#ffd149] border border-[#ffbd20] hover:bg-[#ffbd20] hover:text-white transition duration-200"
       >
         Save
@@ -97,7 +127,7 @@
 
     <div>
       <button
-        (click)="makeCanEditFalse()"
+        (click)="makeCanAddFalse()"
         class="rounded px-4 py-1 border border-red-600 text-red-600 bg-red-600/10 hover:bg-red-600/20 transition"
       >
         Cancel

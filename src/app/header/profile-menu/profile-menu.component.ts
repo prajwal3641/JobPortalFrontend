@@ -8,7 +8,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import {
@@ -16,6 +16,11 @@ import {
   selectProfile,
   UserProfile,
 } from '../../state/user/user.feature';
+import {
+  Profile,
+  ProfileActions,
+  selectProfileData,
+} from '../../state/profile/profile.feature';
 
 @Component({
   selector: 'app-profile-menu',
@@ -28,11 +33,14 @@ export class ProfileMenuComponent implements OnInit {
   dropdownOpen = signal(false);
   isDarkMode = signal(true);
   user$!: Observable<UserProfile | null>;
+  profile$!: Observable<Profile | null>;
 
   private store = inject(Store);
+  private router = inject(Router);
 
   ngOnInit(): void {
     this.user$ = this.store.select(selectProfile);
+    this.profile$ = this.store.select(selectProfileData);
   }
 
   toggleDropdown() {
@@ -49,6 +57,10 @@ export class ProfileMenuComponent implements OnInit {
 
   logout() {
     this.store.dispatch(UserActions.logoutSubmitted());
+    this.store.dispatch(ProfileActions.removeProfile());
+    this.router.navigate(['/'], {
+      replaceUrl: true,
+    });
   }
 
   // Close dropdown on outside click

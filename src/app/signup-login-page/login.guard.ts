@@ -20,3 +20,19 @@ export const redirectIfLoggedInGuard: CanActivateFn = () => {
     })
   );
 };
+
+export const redirectIfNotLoggedInGuard: CanActivateFn = () => {
+  const store = inject(Store);
+  const router = inject(Router);
+
+  return store.select(selectProfile).pipe(
+    take(1),
+    map((profile) => {
+      if (!profile) {
+        router.navigate(['/']);
+        return false;
+      }
+      return true;
+    })
+  );
+};

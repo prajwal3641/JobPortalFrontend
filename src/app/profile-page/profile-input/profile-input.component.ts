@@ -1,47 +1,50 @@
-import { Component } from '@angular/core';
 import {
-  Input,
-  signal,
-  computed,
-  HostListener,
+  Component,
   ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  Output,
   AfterViewChecked,
+  OnInit,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { signal, computed } from '@angular/core';
 import { ProfileFeilds } from '../../Data/Profile';
 
 @Component({
   selector: 'app-profile-input',
+  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './profile-input.component.html',
   styleUrl: './profile-input.component.css',
 })
-export class ProfileInputComponent {
-  @Input() field: ProfileFeilds = {
-    label: '',
-    placeholder: '',
-    options: [],
-    value: '',
-    leftSection: '',
-  };
+export class ProfileInputComponent implements OnInit, AfterViewChecked {
+  @Input({ required: true }) field!: ProfileFeilds;
+  @Input({ required: true }) value!: string;
+  @Output() valueChange = new EventEmitter<string>();
 
   @Input() required = false;
 
   dropdownOpen = signal(false);
-  search = signal('scdsdc');
+  search = signal('');
   selected = signal('');
   highlightedIndex = signal<number>(-1);
 
+  constructor(private elRef: ElementRef) {}
+
   ngOnInit(): void {
-    const first = this.field.options[0];
-    if (first) {
-      this.selected.set(first);
-      this.search.set(first);
+    if (this.value && this.field.options.includes(this.value)) {
+      this.selected.set(this.value);
+      this.search.set(this.value);
+    } else if (this.field.options.length > 0) {
+      // const first = this.field.options[0];
+      this.selected.set('');
+      this.search.set('');
+      this.valueChange.emit('');
     }
   }
-
-  constructor(private elRef: ElementRef) {}
 
   toggleDropdown() {
     this.dropdownOpen.set(!this.dropdownOpen());
@@ -56,8 +59,10 @@ export class ProfileInputComponent {
   }
 
   selectOption(option: string) {
+    if (!this.field.options.includes(option)) return;
     this.selected.set(option);
     this.search.set(option);
+    this.valueChange.emit(option);
     this.closeDropdown();
   }
 

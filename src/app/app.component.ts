@@ -12,8 +12,11 @@ import { NgIf } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { LocalStorageService } from './Services/local-storage.service';
 import { UserActions } from './state/user/user.feature';
+import { ProfileActions } from './state/profile/profile.feature';
+import { ProfileService } from './Services/profile.service';
 
 @Component({
+  standalone: true,
   selector: 'app-root',
   imports: [RouterOutlet, HeaderComponent, FooterComponent, NgIf],
   templateUrl: './app.component.html',
@@ -25,7 +28,8 @@ export class AppComponent implements OnInit {
   constructor(
     private router: Router,
     private store: Store,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private profileService: ProfileService
   ) {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
@@ -42,8 +46,19 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     const user = this.localStorageService.getItem('user');
+    // const profile = sessionStorage.getItem('profile');
     if (user) {
       this.store.dispatch(UserActions.rehydrateState({ userObject: user }));
+      this.profileService.getProfile(user.profileId).subscribe({
+        next: (profile) => {
+          this.store.dispatch(
+            ProfileActions.setProfile({ profileObject: profile })
+          );
+        },
+        error: (error) => {
+          console.error('Error fetching profile:', error);
+        },
+      });
     }
   }
 }

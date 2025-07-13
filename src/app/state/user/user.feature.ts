@@ -1,5 +1,7 @@
+import { inject } from '@angular/core';
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { createAction, props } from '@ngrx/store';
+import { LocalStorageService } from '../../Services/local-storage.service';
 
 // The shape of your user data
 export interface UserProfile {
@@ -7,6 +9,7 @@ export interface UserProfile {
   name: string;
   email: string;
   accountType: string;
+  profileId: number;
 }
 
 // The shape of this state "slice"
@@ -44,7 +47,7 @@ export const userFeature = createFeature({
   reducer: createReducer(
     initialState,
 
-    // When rehydrateState occurs, this reducer updates the state with the new profile.
+    // When rehydrateState occurs, this reducer updates the state with the new user.
     on(UserActions.rehydrateState, (state, { userObject }) => ({
       ...state,
       profile: userObject,

@@ -4,7 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { UserService } from '../../Services/user.service';
 import { FormValidators } from '../../utils/form.validators';
 import { NgIf } from '@angular/common';
-import { ResetPasswordComponent } from '../../signup-login/reset-password/reset-password.component';
+import { ResetPasswordComponent } from '../reset-password/reset-password.component';
 import { Store } from '@ngrx/store';
 import { UserActions } from '../../state/user/user.feature';
 
@@ -56,7 +56,9 @@ export class LoginComponent {
 
           // Dispatch the action to the NgRx store
           this.store.dispatch(UserActions.loginSubmitted({ userObject: res }));
+          // update the profile in the store
 
+          // get profile
           // clear the form (note this does shallow copy !)
           Object.assign(this.form, {
             email: '',

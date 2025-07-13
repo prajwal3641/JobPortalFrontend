@@ -18,6 +18,9 @@ import { provideStore, provideState } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { userFeature } from './state/user/user.feature';
 import { UserEffects } from './state/user/user.effects';
+import { profileFeature } from './state/profile/profile.feature';
+import { ProfileService } from './Services/profile.service';
+import { ProfileEffects } from './state/profile/profile.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -34,8 +37,12 @@ export const appConfig: ApplicationConfig = {
     ),
     provideAnimations(),
     provideHttpClient(),
-    provideStore(),
+    // register each feature exactly once:
     provideState(userFeature),
-    provideEffects([UserEffects]),
+    provideState(profileFeature),
+    provideStore(),
+
+    // register your effects
+    provideEffects([UserEffects, ProfileEffects]),
   ],
 };

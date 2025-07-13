@@ -1,33 +1,66 @@
+@if(showOverlay){
+<!-- Loading Overlay -->
+<div
+  class="fixed inset-0 backdrop-blur-sm bg-black/30 flex items-center justify-center z-40 pointer-events-auto"
+>
+  <!-- Golden spinner + text -->
+  <div class="flex flex-col items-center gap-2">
+    <svg
+      class="animate-spin h-8 w-8 text-[#ffbd20]"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <circle
+        class="opacity-25"
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="currentColor"
+        stroke-width="4"
+      />
+      <path
+        class="opacity-75"
+        fill="currentColor"
+        d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+      />
+    </svg>
+    <p class="text-white text-sm">Please wait...</p>
+  </div>
+</div>
+}
+
 <div class="flex flex-col gap-3">
   <div class="font-semibold text-[#d1d1d1] text-lg">Add Certification</div>
 
   <!-- inputs -->
   <div class="flex [&>*]:w-1/2 gap-4">
     <!-- for certification title -->
-    <app-input-field label="Title" />
+    <app-input-field [(value)]="certification.name" label="Name" />
 
     <!-- for company dropdown -->
-    <app-profile-input [field]="fields[1]" />
+    <app-profile-input [(value)]="certification.issuer" [field]="fields[1]" />
   </div>
 
   <div class="flex [&>*]:w-1/2 gap-4">
     <!-- issue date -->
     <div class="flex flex-col space-y-1">
       <label for="monthInput" class="text-md font-medium text-[#d1d1d1]">
-        Start Date <span class="text-rose-500">*</span>
+        Issue Date <span class="text-rose-500">*</span>
       </label>
       <input
-        type="month"
+        type="date"
         id="monthInput"
         name="monthInput"
-        max="endDate"
-        [(ngModel)]="issueDate"
+        [max]="todayDate"
+        [(ngModel)]="certification.issueDate"
         class="border border-gray-300 rounded-md px-3 py-2 text-white bg-transparent hover:bg-[#ffbd20]/10 focus:outline-none focus:ring-2 focus:ring-yellow-400"
       />
     </div>
 
     <!-- Certificate ID -->
     <app-input-field
+      [(value)]="certification.certificationId"
       label="Certificate ID"
       placeholder="Enter Certificate ID"
     />
@@ -37,7 +70,7 @@
   <div class="flex mt-2 gap-4">
     <div>
       <button
-        (click)="makeAddCertiFalse()"
+        (click)="onSaveCertification()"
         class="px-5 py-1 rounded bg-[#3d3d3d] text-[#ffd149] border border-[#ffbd20] hover:bg-[#ffbd20] hover:text-white transition duration-200"
       >
         Save
@@ -46,6 +79,7 @@
 
     <div>
       <button
+        (click)="onCancelAddCerti()"
         class="rounded px-4 py-1 border border-red-600 text-red-600 bg-red-600/10 hover:bg-red-600/20 transition"
       >
         Cancel
@@ -53,3 +87,13 @@
     </div>
   </div>
 </div>
+
+@if(notification.show){
+<app-notification
+  [(show)]="notification.show"
+  [message]="notification.message"
+  [type]="notification.type"
+  [title]="notification.title"
+  [time]="notification.time"
+/>
+}

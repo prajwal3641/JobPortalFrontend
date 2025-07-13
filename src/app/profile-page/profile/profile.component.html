@@ -1,50 +1,110 @@
+<app-loading-overlay [show]="showOverlay" />
+
 <div class="w-4/5 mx-auto mt-10">
   <!-- banner image and profile image   -->
   <div class="relative">
+    <!-- Banner -->
     <img
       class="rounded-t-2xl"
       src="assets/Profile/banner.jpg"
       alt="banner image"
     />
-    <img
-      class="absolute -bottom-14 left-3 h-48 w-48 border-8 border-[#2d2d2d] rounded-full"
-      src="assets/avatar.png"
-      alt="banner image"
-    />
+
+    <!-- Profile Image -->
+    <div *ngIf="profile" class="absolute -bottom-14 left-3">
+      <div class="relative w-48 h-48 group">
+        <!-- Profile Image -->
+        <img
+          class="h-full w-full border-8 border-[#2d2d2d] rounded-full object-cover transition duration-300 group-hover:brightness-75"
+          [src]="
+            profile.profileImage
+              ? 'data:image/jpeg;base64,' + profile.profileImage
+              : 'assets/avatar1.png'
+          "
+          alt="profile image"
+        />
+
+        <!-- Edit Icon (Hidden by default, shows on hover) -->
+        <label
+          for="profileImageInput"
+          class="absolute bottom-3 right-3 bg-[#2d2d2d] hover:bg-[#3a3a3a] p-2 rounded-full cursor-pointer border-2 border-[#ffbd20] transition"
+        >
+          <!-- opacity-0 group-hover:opacity-100 for making the edit button hidden , till hovered -->
+          <img src="assets/edit-profile/pencil.png" class="h-5 w-5" />
+        </label>
+
+        <input
+          id="profileImageInput"
+          type="file"
+          class="hidden"
+          (change)="onProfileImageSelected($event)"
+        />
+      </div>
+    </div>
   </div>
 
   <!-- profile info -->
   <div class="flex flex-col gap-1 px-3 mt-16 text-[#d1d1d1]">
     <!-- name and edit and save icon -->
     <div class="flex justify-between items-center">
-      <div class="text-3xl font-semibold">{{ profile.name }}</div>
-      <div
-        (click)="handleEdit(0)"
-        class="rounded-full hover:bg-[#4b4635] p-2 cursor-pointer"
-      >
+      <div *ngIf="profile; else notProfile" class="text-3xl font-semibold">
+        {{ profile.email.split("@")[0] }}
+      </div>
+      <ng-template #notProfile>
+        <div class="text-3xl font-semibold">Profile</div>
+        <div class="">Failed to get profile</div>
+      </ng-template>
+
+      <div *ngIf="profile" class="p-1 cursor-pointer">
         <!-- if want  to edit  -->
-        <img
+        <div
           *ngIf="!edit()[0]"
-          class="h-7 w-7"
-          src="assets/edit-profile/pencil.png"
-          alt="edit-pencil"
-        />
+          (click)="handleEdit(0)"
+          class="hover:bg-[#4b4635] flex gap-2 p-2 rounded-full"
+        >
+          <img
+            class="h-7 w-7"
+            src="assets/edit-profile/pencil.png"
+            alt="edit-pencil"
+          />
+        </div>
         <!-- if want to save -->
-        <img
-          *ngIf="edit()[0]"
-          class="h-7 w-7"
-          src="assets/edit-profile/save.png"
-          alt="edit-pencil"
-        />
+        <div *ngIf="edit()[0]" class="flex gap-2">
+          <div
+            (click)="handleEdit(0); saveSection('profile')"
+            class="hover:bg-[#4b4635] p-2 rounded-full"
+          >
+            <img
+              class="h-7 w-7"
+              src="assets/edit-profile/save.png"
+              alt="edit-save"
+            />
+          </div>
+          <div
+            (click)="handleEdit(0); onCancelEdit()"
+            class="hover:bg-[#4b4635] p-2 rounded-full"
+          >
+            <img
+              class="h-7 w-7"
+              src="assets/edit-profile/cross.png"
+              alt="edit-save"
+            />
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- Dynamically update based on edit -->
     @if(!edit()[0]){
     <!-- role , company , location information -->
-    <div class="text-xl">{{ profile.role }} &bull; {{ profile.company }}</div>
+    <div *ngIf="profile.jobTitle && profile.company" class="text-xl">
+      {{ profile.jobTitle }} &bull; {{ profile.company }}
+    </div>
     <div>
-      <span class="flex items-center gap-1 text-[#888888] text-md">
+      <span
+        *ngIf="profile.location"
+        class="flex items-center gap-1 text-[#888888] text-md"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="#888888"
@@ -65,10 +125,26 @@
     </div>
     }@else {
     <div class="[&>*]:w-1/2 flex justify-between gap-4">
-      <div><app-profile-input [field]="fields[0]" [required]="true" /></div>
-      <div><app-profile-input [field]="fields[1]" [required]="true" /></div>
+      <div>
+        <app-profile-input
+          [(value)]="profileEdit.jobTitle"
+          [field]="fields[0]"
+          [required]="true"
+        />
+      </div>
+      <div>
+        <app-profile-input
+          [(value)]="profileEdit.company"
+          [field]="fields[1]"
+          [required]="true"
+        />
+      </div>
     </div>
-    <app-profile-input [field]="fields[2]" [required]="true" />
+    <app-profile-input
+      [(value)]="profileEdit.location"
+      [field]="fields[2]"
+      [required]="true"
+    />
     }
   </div>
 
@@ -81,30 +157,48 @@
       class="text-2xl mb-1 font-semibold text-[#d1d1d1] flex items-center justify-between"
     >
       <div>About</div>
-      <div
-        (click)="handleEdit(1)"
-        class="rounded-full hover:bg-[#4b4635] p-2 cursor-pointer"
-      >
+      <div *ngIf="profile" class="p-1 cursor-pointer">
         <!-- if want  to edit  -->
-        <img
+        <div
           *ngIf="!edit()[1]"
-          class="h-7 w-7"
-          src="assets/edit-profile/pencil.png"
-          alt="edit-pencil"
-        />
+          (click)="handleEdit(1)"
+          class="hover:bg-[#4b4635] flex gap-2 p-2 rounded-full"
+        >
+          <img
+            class="h-7 w-7"
+            src="assets/edit-profile/pencil.png"
+            alt="edit-pencil"
+          />
+        </div>
         <!-- if want to save -->
-        <img
-          *ngIf="edit()[1]"
-          class="h-7 w-7"
-          src="assets/edit-profile/save.png"
-          alt="edit-pencil"
-        />
+        <div *ngIf="edit()[1]" class="flex gap-2">
+          <div
+            (click)="handleEdit(1); saveSection('about')"
+            class="hover:bg-[#4b4635] p-2 rounded-full"
+          >
+            <img
+              class="h-7 w-7"
+              src="assets/edit-profile/save.png"
+              alt="edit-save"
+            />
+          </div>
+          <div
+            (click)="handleEdit(1); onCancelEdit()"
+            class="hover:bg-[#4b4635] p-2 rounded-full"
+          >
+            <img
+              class="h-7 w-7"
+              src="assets/edit-profile/cross.png"
+              alt="edit-save"
+            />
+          </div>
+        </div>
       </div>
     </div>
 
     @if(!edit()[1]){
     <div class="text-sm text-[#b0b0b0] text-justify">
-      {{ profile.about }}
+      <p *ngIf="profile">{{ profile.about }}</p>
     </div>
     }@else {
     <!-- we can add component also , but rn i am giving just normal input -->
@@ -114,7 +208,7 @@
         placeholder="Enter About youself....."
         required="true"
         [style.minHeight.px]="7 * 24"
-        [(ngModel)]="profile.about"
+        [(ngModel)]="profileEdit.about"
       ></textarea>
     </div>
     }
@@ -129,24 +223,42 @@
       class="text-2xl mb-1 font-semibold text-[#d1d1d1] flex items-center justify-between"
     >
       <div>Skills</div>
-      <div
-        (click)="handleEdit(2)"
-        class="rounded-full hover:bg-[#4b4635] p-2 cursor-pointer"
-      >
+      <div *ngIf="profile" class="p-1 cursor-pointer">
         <!-- if want  to edit  -->
-        <img
+        <div
           *ngIf="!edit()[2]"
-          class="h-7 w-7"
-          src="assets/edit-profile/pencil.png"
-          alt="edit-pencil"
-        />
+          (click)="handleEdit(2)"
+          class="hover:bg-[#4b4635] flex gap-2 p-2 rounded-full"
+        >
+          <img
+            class="h-7 w-7"
+            src="assets/edit-profile/pencil.png"
+            alt="edit-pencil"
+          />
+        </div>
         <!-- if want to save -->
-        <img
-          *ngIf="edit()[2]"
-          class="h-7 w-7"
-          src="assets/edit-profile/save.png"
-          alt="edit-pencil"
-        />
+        <div *ngIf="edit()[2]" class="flex gap-2">
+          <div
+            (click)="handleEdit(2); saveSection('skill')"
+            class="hover:bg-[#4b4635] p-2 rounded-full"
+          >
+            <img
+              class="h-7 w-7"
+              src="assets/edit-profile/save.png"
+              alt="edit-save"
+            />
+          </div>
+          <div
+            (click)="handleEdit(2); onCancelEdit()"
+            class="hover:bg-[#4b4635] p-2 rounded-full"
+          >
+            <img
+              class="h-7 w-7"
+              src="assets/edit-profile/cross.png"
+              alt="edit-save"
+            />
+          </div>
+        </div>
       </div>
     </div>
     <div class="flex flex-wrap gap-2">
@@ -161,7 +273,7 @@
       <div class="w-full">
         <app-tags-input
           placeholder="Add a skill"
-          [inputTags]="profile.skills"
+          [(inputTags)]="profileEdit.skills"
         />
       </div>
       }
@@ -179,8 +291,16 @@
       <div>Experience</div>
 
       <!-- images-->
-      <div class="flex">
-        <div class="rounded-full p-2 hover:bg-[#4b4635] cursor-pointer">
+      <div class="flex items-center">
+        <!-- add exp -->
+        <div
+          *ngIf="profile"
+          [ngClass]="{
+            'bg-[#2d2d2d]': addExp,
+            'bg-[#4b4635]': addExp
+          }"
+          class="rounded-full p-2 cursor-pointer"
+        >
           <!-- if want  to edit  -->
           <img
             (click)="toggleAddExp()"
@@ -189,35 +309,52 @@
             alt="plus -pencil"
           />
         </div>
-        <div class="rounded-full p-2 hover:bg-[#4b4635] cursor-pointer">
+        <div
+          *ngIf="profile && profile.experience.length"
+          class="p-1 cursor-pointer"
+        >
           <!-- if want  to edit  -->
-          <img
-            (click)="handleEdit(3)"
+          <div
             *ngIf="!edit()[3]"
-            class="h-7 w-7 hover:bg-[#4b4635]"
-            src="assets/edit-profile/pencil.png"
-            alt="edit-pencil"
-          />
-          <!-- if want to save -->
-          <img
             (click)="handleEdit(3)"
-            *ngIf="edit()[3]"
-            class="h-7 w-7"
-            src="assets/edit-profile/save.png"
-            alt="edit-pencil"
-          />
+            class="hover:bg-[#4b4635] flex gap-2 p-2 rounded-full"
+          >
+            <img
+              class="h-7 w-7"
+              src="assets/edit-profile/pencil.png"
+              alt="edit-pencil"
+            />
+          </div>
+          <!-- if want to cancel -->
+          <div *ngIf="edit()[3]" class="flex gap-2">
+            <div
+              (click)="handleEdit(3)"
+              class="hover:bg-[#4b4635] p-2 rounded-full"
+            >
+              <img
+                class="h-7 w-7"
+                src="assets/edit-profile/cross.png"
+                alt="edit-save"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
-
     <div class="flex flex-col gap-8">
-      @for(experience of profile.experience;track $index){
-      <app-experience-card [experience]="experience" [edit]="edit()[3]" />
+      @for(experience of profileEdit.experience;track $index){
+      <app-experience-card
+        (deleteIt)="deleteExperience($event)"
+        [(experience)]="profileEdit.experience[$index]"
+        (experienceChange)="saveSection('experience')"
+        [edit]="edit()[3]"
+      />
       }
 
       <!-- add a new exp section -->
       @if(addExp){
-      <app-experience-card-input [add]="true" [(addExp)]="addExp" />
+      <!-- <div>diijdiaw</div> -->
+      <app-add-experience-card [(canAdd)]="addExp" />
       }
     </div>
   </div>
@@ -230,40 +367,61 @@
       class="text-2xl font-semibold mb-5 text-[#d1d1d1] flex justify-between items-center"
     >
       <div>Certifications</div>
-      <div class="flex">
-        <div class="rounded-full p-2 hover:bg-[#4b4635] cursor-pointer">
-          <!-- if want  to edit  -->
+      <div class="flex items-center">
+        <!-- add certi -->
+        <div
+          *ngIf="profile"
+          (click)="toggleAddCerti()"
+          [ngClass]="{
+            'bg-[#2d2d2d]': addCerti,
+            'bg-[#4b4635]': addCerti
+          }"
+          class="rounded-full p-2 cursor-pointer"
+        >
+          <!-- if want  to add  -->
           <img
-            (click)="toggleAddCerti()"
             class="h-7 w-7"
             src="assets/edit-profile/plus.png"
             alt="plus -pencil"
           />
         </div>
-        <div class="rounded-full p-2 hover:bg-[#4b4635] cursor-pointer">
+        <div
+          *ngIf="profile && profile.certification.length"
+          class="p-1 cursor-pointer"
+        >
           <!-- if want  to edit  -->
-          <img
-            (click)="handleEdit(4)"
+          <div
             *ngIf="!edit()[4]"
-            class="h-7 w-7"
-            src="assets/edit-profile/pencil.png"
-            alt="edit-pencil"
-          />
-          <!-- if want to save -->
-          <img
             (click)="handleEdit(4)"
-            *ngIf="edit()[4]"
-            class="h-7 w-7"
-            src="assets/edit-profile/save.png"
-            alt="edit-pencil"
-          />
+            class="hover:bg-[#4b4635] flex gap-2 p-2 rounded-full"
+          >
+            <img
+              class="h-7 w-7"
+              src="assets/edit-profile/pencil.png"
+              alt="edit-pencil"
+            />
+          </div>
+          <!-- if want to save -->
+          <div *ngIf="edit()[4]" class="flex gap-2">
+            <div
+              (click)="handleEdit(4)"
+              class="hover:bg-[#4b4635] p-2 rounded-full"
+            >
+              <img
+                class="h-7 w-7"
+                src="assets/edit-profile/cross.png"
+                alt="edit-save"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
     <div class="flex flex-col gap-8">
-      @for(certification of profile.certifications;track $index){
+      @for(certification of profileEdit.certification;track $index){
       <app-certification-card
-        [certification]="certification"
+        (deleteCerti)="deleteCertification($event)"
+        [certification]="profileEdit.certification[$index]"
         [edit]="edit()[4]"
       />
       }
@@ -275,3 +433,13 @@
     </div>
   </div>
 </div>
+
+@if(notification.show){
+<app-notification
+  [(show)]="notification.show"
+  [message]="notification.message"
+  [type]="notification.type"
+  [title]="notification.title"
+  [time]="notification.time"
+/>
+}

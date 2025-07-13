@@ -12,7 +12,10 @@ import { JobHistoryPageComponent } from './job-history-page/job-history-page.com
 import { SignupLoginPageComponent } from './signup-login-page/signup-login-page.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
-import { redirectIfLoggedInGuard } from './signup-login-page/login.guard';
+import {
+  redirectIfLoggedInGuard,
+  redirectIfNotLoggedInGuard,
+} from './signup-login-page/login.guard';
 
 export const routes: Routes = [
   {
@@ -67,7 +70,12 @@ export const routes: Routes = [
   },
   {
     path: 'profile',
+    // loadComponent: () =>
+    //   import('./profile-page/profile-page.component').then(
+    //     (m) => m.ProfilePageComponent
+    //   ),
     component: ProfilePageComponent,
+    canActivate: [redirectIfNotLoggedInGuard],
   },
   {
     path: '**',
