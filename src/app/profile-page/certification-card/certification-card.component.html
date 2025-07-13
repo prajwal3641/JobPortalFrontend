@@ -17,12 +17,13 @@
   <!-- dates -->
   <div class="flex items-center gap-4">
     <div class="text-sm text-[#b0b0b0] flex flex-col items-end">
-      <div>{{ certification().issueDate }}</div>
-      <div>{{ certification().certificateId }}</div>
+      <div>{{ certification().issueDate | date : "MMMM yyyy" }}</div>
+      <div>{{ certification().certificationId }}</div>
     </div>
 
     <!-- add a trash icon on edit button clicked on profile page -->
     <img
+      (click)="onDeleteCerti()"
       *ngIf="edit()"
       class="h-7 w-7"
       src="assets/edit-profile/trash.png"

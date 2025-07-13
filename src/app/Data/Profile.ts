@@ -2,7 +2,6 @@ export interface ProfileFeilds {
   label: string;
   placeholder: string;
   options: string[];
-  value: string;
   leftSection: string;
 }
 
@@ -12,6 +11,8 @@ const fields: ProfileFeilds[] = [
     placeholder: 'Enter Job Title',
     options: [
       'Designer',
+      'Software Engineer III',
+      'Software Engineer',
       'Developer',
       'Product Manager',
       'Marketing Specialist',
@@ -20,7 +21,6 @@ const fields: ProfileFeilds[] = [
       'Content Writer',
       'Customer Support',
     ],
-    value: 'Software Engineer',
     leftSection: 'assets/briefcase.svg',
   },
   {
@@ -37,13 +37,13 @@ const fields: ProfileFeilds[] = [
       'Apple',
       'Spotify',
     ],
-    value: 'Google',
     leftSection: 'assets/briefcase.svg',
   },
   {
     label: 'Location',
     placeholder: 'Enter Job Location',
     options: [
+      'New York, United States',
       'Delhi',
       'New York',
       'San Francisco',
@@ -53,7 +53,6 @@ const fields: ProfileFeilds[] = [
       'Sydney',
       'Toronto',
     ],
-    value: 'New York, United States',
     leftSection: 'assets/location.png',
   },
 ];

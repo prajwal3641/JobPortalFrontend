@@ -5,26 +5,31 @@
       <div class="p-2 bg-[#454545] rounded-md">
         <img
           class="h-7 w-7"
-          [src]="`assets/Icons/${experience().company}.png`"
+          [src]="`assets/Icons/${experience.company}.png`"
           alt="f"
         />
       </div>
       <div>
-        <div class="font-semibold">{{ experience().title }}</div>
+        <div class="font-semibold">{{ experience.title }}</div>
         <div class="text-[#b0b0b0] text-sm">
-          {{ experience().company }} &#x2022; {{ experience().location }}
+          {{ experience.company }} &#x2022; {{ experience.location }}
         </div>
       </div>
     </div>
 
     <!-- dates -->
     <div class="text-sm text-[#b0b0b0]">
-      {{ experience().startDate }} - {{ experience().endDate }}
+      {{ experience.startDate | date : "MMMM yyyy" }} -
+      {{
+        experience.working
+          ? "Present"
+          : (experience.endDate | date : "MMMM yyyy")
+      }}
     </div>
   </div>
   <!-- experience  -->
   <div class="text-xs text-justify text-[#b0b0b0]">
-    {{ experience().description }}
+    {{ experience.description }}
   </div>
 
   <!-- buttons -->
@@ -40,6 +45,7 @@
 
     <div>
       <button
+        (click)="onDeleteExperience()"
         class="rounded px-4 py-1 border border-red-600 text-red-600 bg-red-600/10 hover:bg-red-600/20 transition"
       >
         Delete
@@ -48,6 +54,10 @@
   </div>
 </div>
 
-<div *ngIf="canEdit">
-  <app-experience-card-input [(canEdit)]="canEdit" />
+<div *ngIf="canEdit && edit()">
+  <app-experience-card-input
+    [(experience)]="experience"
+    (experienceChange)="onEditSaveKaro($event)"
+    [(canEdit)]="canEdit"
+  />
 </div>

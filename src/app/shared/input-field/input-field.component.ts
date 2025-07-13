@@ -23,7 +23,7 @@ export class InputFieldComponent {
   @Output() valueChange = new EventEmitter<any>();
 
   ngOnInit() {
-    this.value = '';
+    // this.value = '';
   }
 
   // Password toggle

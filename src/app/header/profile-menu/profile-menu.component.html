@@ -1,14 +1,28 @@
-<div class="relative profile-menu-container font-['poppins']">
+<div
+  *ngIf="user$ | async as user"
+  class="relative profile-menu-container font-['poppins']"
+>
   <!-- Avatar Button -->
   <div
     class="cursor-pointer flex gap-3 items-center p-2 rounded-xl hover:bg-[#3a3a3a]"
     (click)="toggleDropdown()"
   >
-    <div>marshal</div>
+    <div>{{ user.name }}</div>
 
     <img
-      src="assets/avatar.png"
-      alt="Profile"
+      *ngIf="profile$ | async as profile"
+      [src]="
+        profile.profileImage
+          ? 'data:image/jpeg;base64,' + profile.profileImage
+          : 'assets/avatar1.png'
+      "
+      [alt]="user.name"
+      class="w-10 h-10 rounded-full object-cover border-2 border-[#584940]"
+    />
+    <img
+      *ngIf="!(profile$ | async)"
+      src="assets/avatar1.png"
+      alt="Default Avatar"
       class="w-10 h-10 rounded-full object-cover border-2 border-[#584940]"
     />
   </div>
@@ -19,6 +33,7 @@
     class="absolute right-0 mt-2 min-w-50 bg-[#2d2d2d] text-[#b0b0b0] rounded-md shadow-lg z-50 overflow-hidden border border-[#555555]"
   >
     <div
+      (click)="toggleDropdown()"
       routerLink="/profile"
       class="flex items-center gap-3 px-4 py-2 hover:bg-[#3a3a3a] cursor-pointer"
     >
@@ -26,12 +41,14 @@
       <span>Profile</span>
     </div>
     <div
+      (click)="toggleDropdown()"
       class="flex items-center gap-3 px-4 py-2 hover:bg-[#3a3a3a] cursor-pointer"
     >
       <img class="h-6 w-6" src="assets/profile-menu/message.png" alt="" />
       <span>Messages</span>
     </div>
     <div
+      (click)="toggleDropdown()"
       class="flex items-center gap-3 px-4 py-2 hover:bg-[#3a3a3a] cursor-pointer"
     >
       <img class="h-6 w-6" src="assets/profile-menu/file.png" alt="" />
@@ -74,6 +91,7 @@
 
     <!-- Logout -->
     <div
+      (click)="logout()"
       class="flex items-center gap-2 px-4 py-2 hover:bg-[#3a3a3a] cursor-pointer text-red-500"
     >
       <img class="h-6 w-6" src="assets/profile-menu/logout.png" alt="" />
@@ -81,4 +99,13 @@
     </div>
   </div>
   }
+</div>
+
+<div *ngIf="!(user$ | async)">
+  <button
+    routerLink="/login"
+    class="rounded px-6 py-1 text-[#ffbd20] bg-[#ffbd2033] hover:bg-[#ffbd204d] transition"
+  >
+    Login
+  </button>
 </div>

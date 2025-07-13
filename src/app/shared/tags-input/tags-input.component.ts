@@ -1,4 +1,11 @@
-import { Component, input, Input, signal } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  input,
+  Input,
+  Output,
+  signal,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -18,6 +25,7 @@ export class TagsInputComponent {
 
   // if i want a list of tags as a input , optional (to handle profile page skills edit part)
   @Input() inputTags: string[] = [];
+  @Output() inputTagsChange = new EventEmitter();
 
   tags = signal<string[]>([]);
   inputValue = signal('');
@@ -31,6 +39,7 @@ export class TagsInputComponent {
     if (trimmed && !this.tags().includes(trimmed)) {
       this.tags.update((t) => [...t, trimmed]);
     }
+    this.inputTagsChange.emit(this.tags());
     this.inputValue.set('');
   }
 
@@ -48,9 +57,11 @@ export class TagsInputComponent {
 
   removeTag(tag: string) {
     this.tags.update((t) => t.filter((x) => x !== tag));
+    this.inputTagsChange.emit(this.tags());
   }
 
   clearAll() {
     this.tags.set([]);
+    this.inputTagsChange.emit(this.tags());
   }
 }

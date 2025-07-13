@@ -97,7 +97,7 @@ export class ResetPasswordComponent {
     // this.error = '';
 
     // every time send otp or resend otp , make the timer 30
-    this.resendTimer = 2;
+    this.resendTimer = 10;
 
     this.otpSending = true;
     this.userService.sendOtp(this.email).subscribe({
@@ -263,5 +263,9 @@ export class ResetPasswordComponent {
         show: true,
       };
     }, 10); // ⏱️ gives Angular time to detect the transition
+  }
+
+  onCancel() {
+    this.resetPasswordChange.emit(false);
   }
 }
