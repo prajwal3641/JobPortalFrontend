@@ -9,6 +9,8 @@ import { JobDescriptionComponent } from '../job-description/job-description.comp
 import { JobDescriptionOverviewComponent } from '../job-description/job-description-overview/job-description-overview.component';
 import { TalentsComponent } from '../find-talent/talents/talents.component';
 import { TalentsListComponent } from '../find-talent/talents-list/talents-list.component';
+import { PostedJobDescriptionComponent } from './posted-job-description/posted-job-description.component';
+import { PostedJobService } from '../Services/posted-job.service';
 
 @Component({
   selector: 'app-posted-job',
@@ -19,12 +21,12 @@ import { TalentsListComponent } from '../find-talent/talents-list/talents-list.c
 export class PostedJobComponent {
   tabComponents = [ActiveJobsComponent, ActiveJobsComponent];
   tabComponentsInputs = {
-    Active: { jobs: activeJobs },
-    Drafts: { jobs: drafts },
+    Active: { jobs: activeJobs, active: true },
+    Drafts: { jobs: drafts, active: false },
   };
 
   tabComponents2 = [
-    JobDescriptionOverviewComponent,
+    PostedJobDescriptionComponent,
     TalentsListComponent,
     TalentsListComponent,
   ];
@@ -34,4 +36,10 @@ export class PostedJobComponent {
     Applicants: { posted: true },
     Invited: { invited: true },
   };
+
+  constructor(private postedJobService: PostedJobService) {}
+
+  get activeJob() {
+    return this.postedJobService.activeJob();
+  }
 }

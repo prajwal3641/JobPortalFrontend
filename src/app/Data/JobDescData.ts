@@ -1,8 +1,28 @@
 const card = [
-  { name: 'Location', icon: 'assets/location.png', value: 'New York' },
-  { name: 'Experience', icon: 'assets/briefcase.svg', value: 'Expert' },
-  { name: 'Salary', icon: 'assets/dollar.png', value: '48 LPA' },
-  { name: 'Job Type', icon: 'assets/workspace.png', value: 'Full Time' },
+  {
+    name: 'Location',
+    icon: 'assets/location.png',
+    value: 'New York',
+    id: 'location',
+  },
+  {
+    name: 'Experience',
+    icon: 'assets/briefcase.svg',
+    value: 'Expert',
+    id: 'experience',
+  },
+  {
+    name: 'Salary',
+    icon: 'assets/dollar.png',
+    value: '48 LPA',
+    id: 'packageOffered',
+  },
+  {
+    name: 'Job Type',
+    icon: 'assets/workspace.png',
+    value: 'Full Time',
+    id: 'jobType',
+  },
 ];
 const skills = [
   'React',

@@ -18,6 +18,7 @@ export interface Profile {
   skills: string[];
   experience: Experience[];
   certification: Certification[];
+  savedJobs: number[] | null;
 }
 
 export interface Experience {
@@ -62,6 +63,19 @@ export const ProfileActions = {
     props<{ profileObject: Profile }>()
   ),
   removeProfile: createAction('[Profile Component] Remove Profile'),
+  updateProfileRequest: createAction(
+    '[Profile Component] Update Profile Request', // ✅ Properly scoped name
+    props<{ updatedProfile: Profile }>()
+  ),
+  updateProfileSuccess: createAction(
+    '[Profile Component] Update Profile Success', // ✅ Proper name
+    props<{ updatedProfile: Profile }>()
+  ),
+  updateProfileError: createAction(
+    '[Profile Component] Update Profile Error', // ✅ Proper name
+    props<{ error: string }>()
+  ),
+
   addCertificationRequest: createAction(
     '[Certification-Input Component] Add Certification Request',
     props<{ certificationObject: Certification }>()
@@ -105,6 +119,22 @@ export const profileFeature = createFeature({
     on(ProfileActions.removeProfile, (state) => {
       return initialState;
     }),
+    on(ProfileActions.updateProfileRequest, (state, { updatedProfile }) => ({
+      ...state,
+      loading: true,
+      error: null,
+    })),
+    on(ProfileActions.updateProfileSuccess, (state, { updatedProfile }) => ({
+      ...state,
+      loading: false,
+      error: null,
+      profileData: updatedProfile,
+    })),
+    on(ProfileActions.updateProfileError, (state, { error }) => ({
+      ...state,
+      loading: true,
+      error: error || 'An error occurred while updating profile.',
+    })),
 
     // When certification request starts (optional - for loading state)
     on(

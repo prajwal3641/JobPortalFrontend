@@ -17,6 +17,7 @@ export class InputFieldComponent {
   @Input() min?: number;
   @Input() max?: number;
   @Input() minRows: number = 2;
+  @Input() accept: string = ''; // For file input types, e.g., 'image/*', '.pdf'
 
   // ngModel binding
   @Input() value: any;

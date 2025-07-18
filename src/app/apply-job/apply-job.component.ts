@@ -1,45 +1,51 @@
-import { Component, signal } from '@angular/core';
-import { DropdownSearchInputComponent } from '../shared/dropdown-search-input/dropdown-search-input.component';
-import { Router, RouterLink } from '@angular/router';
-import { InputFieldComponent } from '../shared/input-field/input-field.component';
-import { FooterComponent } from '../layouts/footer/footer.component';
-import { NotificationComponent } from '../shared/notification/notification.component';
+import { Component, Input, signal } from '@angular/core';
+import { Location } from '@angular/common';
+import { Job } from '../post-job/post-job.component';
+import { JobService } from '../Services/job.service';
+import { ApplyJobApplicationFormComponent } from './apply-job-application-form/apply-job-application-form.component';
+import { LoadingOverlayComponent } from '../shared/loading-overlay/loading-overlay.component';
+import { getTimeAgo } from '../utils/job.timer';
 
 @Component({
   selector: 'app-apply-job',
-  imports: [RouterLink, InputFieldComponent, NotificationComponent],
+  imports: [ApplyJobApplicationFormComponent, LoadingOverlayComponent],
   templateUrl: './apply-job.component.html',
   styleUrl: './apply-job.component.css',
 })
 export class ApplyJobComponent {
-  preview = signal<boolean>(false);
-  submit = signal<boolean>(false);
-  time = 5;
   showOverlay = signal<boolean>(false);
+  @Input() jobId!: number;
 
-  constructor(private router: Router) {}
+  job!: Job;
 
-  togglePreview() {
-    this.preview.set(!this.preview());
-    // handling the windows scroll up whenever toggle for edit or preview
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  constructor(private location: Location, private jobService: JobService) {}
+
+  ngOnChanges() {
+    if (this.jobId) {
+      this.showOverlay.set(true);
+      this.jobService.getJob(this.jobId).subscribe({
+        next: (res) => {
+          setTimeout(() => this.showOverlay.set(false), 300);
+          // Assuming the response contains the job details
+          // You can handle the response as needed, e.g., display it in the UI
+          console.log('Job details:', res);
+          this.job = res;
+        },
+        error: (err) => {
+          console.error('Error fetching job details:', err);
+          this.showOverlay.set(false);
+        },
+      });
+    }
   }
 
-  handleSubmit() {
-    // submit logic
-    this.submit.set(true);
-    this.showOverlay.set(true);
+  goBack() {
+    this.location.back();
+  }
 
-    const interval = setInterval(() => {
-      this.time--;
-    }, 1000);
-
-    setTimeout(() => {
-      this.submit.set(false);
-      clearInterval(interval);
-      this.showOverlay.set(false);
-      // navigate to other page
-      this.router.navigate(['/find-jobs']);
-    }, 5000);
+  get getTime() {
+    const job = this.job;
+    if (!job || !job.postTime) return '';
+    return getTimeAgo(job.postTime.toString());
   }
 }

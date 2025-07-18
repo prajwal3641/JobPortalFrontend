@@ -48,6 +48,7 @@ export class AppComponent implements OnInit {
     const user = this.localStorageService.getItem('user');
     // const profile = sessionStorage.getItem('profile');
     if (user) {
+      console.log('Rehydrating state with user:', user);
       this.store.dispatch(UserActions.rehydrateState({ userObject: user }));
       this.profileService.getProfile(user.profileId).subscribe({
         next: (profile) => {

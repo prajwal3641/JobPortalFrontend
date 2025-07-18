@@ -24,7 +24,7 @@ export class ProfileEffects {
   addCertification$;
   addExperience$;
 
-  // addProfile$;
+  updateProfile$;
 
   constructor(
     private actions$: Actions,
@@ -113,17 +113,25 @@ export class ProfileEffects {
       );
     });
 
-    // this.addProfile$ = createEffect(
-    //   () => {
-    //     return this.actions$.pipe(
-    //       ofType(ProfileActions.setProfile),
-    //       tap((action) => {
-    //         // sessionStorage.setItem('profile', action.profileObject);
-    //       })
-    //     );
-    //   },
-    //   { dispatch: false }
-    // );
+    this.updateProfile$ = createEffect(() => {
+      return this.actions$.pipe(
+        ofType(ProfileActions.updateProfileRequest),
+        switchMap((action) =>
+          this.profileService.updateProfile(action.updatedProfile).pipe(
+            map((response) =>
+              ProfileActions.updateProfileSuccess({ updatedProfile: response })
+            ),
+            catchError((error) => {
+              const message =
+                error.status === 0
+                  ? 'Backend server is unreachable.'
+                  : error.error?.errorMessage || 'An error occurred.';
+              return of(ProfileActions.updateProfileError({ error: message }));
+            })
+          )
+        )
+      );
+    });
   }
 }
 

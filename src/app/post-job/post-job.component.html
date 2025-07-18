@@ -6,42 +6,135 @@
     <!-- input feilds -->
     <div class="flex flex-col gap-6">
       <div class="flex gap-10 [&>*]:w-1/2">
-        <app-dropdown-search-input
-          [field]="dropDownSearchData[0]"
-          [required]="true"
-        />
-        <app-dropdown-search-input
-          [field]="dropDownSearchData[1]"
-          [required]="true"
-        />
+        <div class="flex flex-col">
+          <app-dropdown-search-input
+            [(value)]="form.jobTitle"
+            [field]="dropDownSearchData[0]"
+            [required]="true"
+            (valueChange)="markAsTouched('jobTitle')"
+          />
+          <div
+            *ngIf="shouldShowError('jobTitle')"
+            class="text-red-500 text-xs mt-1"
+          >
+            {{ error["jobTitle"] }}
+          </div>
+        </div>
+
+        <div class="flex flex-col">
+          <app-dropdown-search-input
+            [(value)]="form.company"
+            [field]="dropDownSearchData[1]"
+            [required]="true"
+            (valueChange)="markAsTouched('company')"
+          />
+          <div
+            *ngIf="shouldShowError('company')"
+            class="text-red-500 text-xs mt-1"
+          >
+            {{ error["company"] }}
+          </div>
+        </div>
       </div>
       <div class="flex gap-10 [&>*]:w-1/2">
-        <app-dropdown-search-input
-          [field]="dropDownSearchData[2]"
-          [required]="true"
-        />
-        <app-dropdown-search-input
-          [field]="dropDownSearchData[3]"
-          [required]="true"
-        />
+        <div class="flex flex-col">
+          <app-dropdown-search-input
+            [(value)]="form.experience"
+            [field]="dropDownSearchData[2]"
+            [required]="true"
+            (valueChange)="markAsTouched('experience')"
+          />
+          <div
+            *ngIf="shouldShowError('experience')"
+            class="text-red-500 text-xs mt-1"
+          >
+            {{ error["experience"] }}
+          </div>
+        </div>
+        <div class="flex flex-col">
+          <app-dropdown-search-input
+            [(value)]="form.jobType"
+            [field]="dropDownSearchData[3]"
+            [required]="true"
+            (valueChange)="markAsTouched('jobType')"
+          />
+          <div
+            *ngIf="shouldShowError('jobType')"
+            class="text-red-500 text-xs mt-1"
+          >
+            {{ error["jobType"] }}
+          </div>
+        </div>
       </div>
       <div class="flex gap-10 [&>*]:w-1/2">
-        <app-dropdown-search-input
-          [field]="dropDownSearchData[4]"
-          [required]="true"
-        />
-        <app-dropdown-search-input
-          [field]="dropDownSearchData[5]"
-          [required]="true"
-        />
+        <div class="flex flex-col">
+          <app-dropdown-search-input
+            [(value)]="form.location"
+            [field]="dropDownSearchData[4]"
+            [required]="true"
+            (valueChange)="markAsTouched('location')"
+          />
+          <div
+            *ngIf="shouldShowError('location')"
+            class="text-red-500 text-xs mt-1"
+          >
+            {{ error["location"] }}
+          </div>
+        </div>
+        <div class="flex flex-col">
+          <app-input-field
+            [(value)]="form.packageOffered"
+            title="Salary"
+            type="number"
+            label="Salary"
+            placeholder="Enter Salary"
+            [min]="2"
+            [max]="300"
+            [required]="true"
+            (valueChange)="markAsTouched('packageOffered')"
+          />
+          <div
+            *ngIf="shouldShowError('packageOffered')"
+            class="text-red-500 text-xs mt-1"
+          >
+            {{ error["packageOffered"] }}
+          </div>
+        </div>
       </div>
 
       <!-- Tag input -->
-      <app-tags-input
-        [label]="'Skills'"
-        [placeholder]="`Enter Skills`"
-        [required]="true"
-      />
+      <div class="flex flex-col">
+        <app-tags-input
+          [(inputTags)]="form.skillsRequired"
+          [label]="'Skills'"
+          [placeholder]="`Enter Skills`"
+          [required]="true"
+          (inputTagsChange)="markAsTouched('skillsRequired')"
+        />
+        <div
+          *ngIf="shouldShowError('skillsRequired')"
+          class="text-red-500 text-xs mt-1"
+        >
+          {{ error["skillsRequired"] }}
+        </div>
+      </div>
+
+      <!-- about job -->
+      <div>
+        <app-input-field
+          [(value)]="form.about"
+          title="About Job"
+          type="textarea"
+          label="About Job"
+          placeholder="Enter About Job"
+          [required]="true"
+          value=""
+          (valueChange)="markAsTouched('about')"
+        />
+        <div *ngIf="shouldShowError('about')" class="text-red-500 text-xs mt-1">
+          {{ error["about"] }}
+        </div>
+      </div>
 
       <!-- Text editor -->
       <div>
@@ -54,11 +147,14 @@
       <div class="flex gap-4">
         <button
           routerLink=""
+          (click)="submitJob()"
+          [disabled]="submitted"
           class="rounded px-4 py-2 text-[#ffbd20] bg-[#ffbd2033] hover:bg-[#ffbd204d] transition"
         >
           Publish Job
         </button>
         <button
+          (click)="submitJob(true)"
           class="px-4 py-2 bg-[#2d2d2d] border border-[#ffbd20] text-[#ffbd20] rounded hover:bg-[#695935]"
         >
           Save as Draft
@@ -67,3 +163,15 @@
     </div>
   </div>
 </div>
+
+@if(notification.show){
+<app-notification
+  [(show)]="notification.show"
+  [message]="notification.message"
+  [type]="notification.type"
+  [title]="notification.title"
+  [time]="notification.time"
+/>
+}
+
+<app-loading-overlay [show]="showOverlay" />

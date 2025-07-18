@@ -35,6 +35,8 @@ export class ProfileInputComponent implements OnInit, AfterViewChecked {
   constructor(private elRef: ElementRef) {}
 
   ngOnInit(): void {
+    // waise no need of this , since value is not used in the template
+    // it is just seetting the initial value which is not required
     if (this.value && this.field.options.includes(this.value)) {
       this.selected.set(this.value);
       this.search.set(this.value);

@@ -48,11 +48,11 @@ export const routes: Routes = [
     component: JobDescriptionComponent,
   },
   {
-    path: 'apply-job',
+    path: 'apply-job/:jobId',
     component: ApplyJobComponent,
   },
   {
-    path: 'company',
+    path: 'company/:companyName',
     component: CompanyProfileComponent,
   },
   {

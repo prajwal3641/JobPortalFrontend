@@ -16,10 +16,11 @@
   >
     <input
       type="text"
+      [required]="required"
       class="bg-transparent outline-none w-full text-sm placeholder-[#a0a0a0]"
       placeholder="{{ field.placeholder }}"
       [ngModel]="search()"
-      (ngModelChange)="search.set($event); highlightedIndex.set(-1)"
+      (ngModelChange)="modelChange($event)"
     />
 
     <!-- Up & Down Arrows -->
