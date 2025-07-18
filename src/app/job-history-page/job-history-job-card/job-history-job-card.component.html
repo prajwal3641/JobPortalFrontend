@@ -1,5 +1,5 @@
 <div
-  class="bg-[#3d3d3d] rounded-xl p-4 w-72 min-h-[250px] flex flex-col gap-3 hover:shadow-[0_0_5px_1px_yellow] !shadow-[#ffbd20] transition duration-400 ease-in-out"
+  class="bg-[#3d3d3d] rounded-xl p-4 w-72 min-h-[280px] flex flex-col gap-3 hover:shadow-[0_0_5px_1px_yellow] !shadow-[#ffbd20] transition duration-400 ease-in-out mt-2"
 >
   <!-- title section -->
   <div class="flex justify-between">
@@ -25,8 +25,8 @@
       <!-- <img class="text-[#ffbd20]" src="assets/bookmark.svg" alt="" /> -->
       <svg
         (click)="toggleBookmark()"
-        [attr.fill]="isBookmarked ? '#ffbd20' : 'none'"
-        [attr.stroke]="isBookmarked ? '#ffbd20' : '#ffbd20'"
+        [attr.fill]="isBookmarked() ? '#ffbd20' : 'none'"
+        [attr.stroke]="isBookmarked() ? '#ffbd20' : '#ffbd20'"
         xmlns="http://www.w3.org/2000/svg"
         class="h-6 w-6 cursor-pointer transition duration-200 ease-in-out"
         viewBox="0 0 24 24"
@@ -84,14 +84,49 @@
             d="M12 6v6l4 2"
           />
         </svg>
+        <span *ngIf="applied() || interviewing()">Applied </span>
+        <span *ngIf="offered()">Interviewed </span>
+        <span *ngIf="!offered() && !applied() && !interviewing()">Posted</span>
         {{ getTime }}
       </span>
     </div>
   </div>
-  <button
-    [routerLink]="['/jobs', job().id]"
-    class="rounded px-4 py-2 border border-[#ffbd20] text-[#ffbd20] hover:bg-[#ffbd2033] transition mb-2"
+  <div
+    *ngIf="isApplied() && saved()"
+    class="text-green-600 text-xs border border-green-600 w-2/5 px-1 py-1 rounded text-center"
   >
-    View Job
-  </button>
+    Applied
+  </div>
+
+  <!-- buttons -->
+  @if(offered()){
+  <hr class="border border-[#474643] my-2" />
+
+  <div class="flex [&>*]:w-1/2 gap-2">
+    <!-- profile button -->
+    <div>
+      <button
+        class="w-full px-4 py-2 rounded bg-[#3d3d3d] text-[#ffd149] border border-[#ffbd20] hover:bg-[#ffbd20] hover:text-white transition duration-200"
+      >
+        Accept
+      </button>
+    </div>
+
+    <!-- Message Button -->
+    <div>
+      <button
+        class="w-full rounded px-4 py-2 text-[#ffbd20] bg-[#ffbd2033] hover:bg-[#ffbd204d] transition"
+      >
+        Reject
+      </button>
+    </div>
+  </div>
+  } @if(interviewing()){
+  <hr class="border border-[#474643] my-2" />
+
+  <div class="flex gap-2 items-center text-sm">
+    <img class="h-6 w-6" src="assets/calender.png" alt="calender" /> Sun, 25
+    August &bull; <span class="text-[#888888]">10:00 AM</span>
+  </div>
+  }
 </div>

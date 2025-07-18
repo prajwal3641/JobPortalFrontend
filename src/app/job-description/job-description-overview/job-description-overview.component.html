@@ -3,22 +3,34 @@
   <!-- image and profile-->
   <div class="flex items-center gap-2">
     <div class="p-3 bg-[#454545] rounded-xl">
-      <img class="h-14 w-14" [src]="`assets/Icons/Google.png`" alt="company" />
+      <img
+        class="h-14 w-14"
+        [src]="`assets/Icons/${job.company}.png`"
+        alt="company"
+      />
     </div>
     <div class="flex flex-col gap-1">
-      <div class="font-semibold text-2xl">Software Engineer</div>
+      <div class="font-semibold text-2xl">{{ job.jobTitle }}</div>
       <div class="text-[#b0b0b0] text-lg">
-        Google &bull; 3 days ago &#x2022; 20 Applicants
+        {{ job.company }} &bull; {{ getTime }} &#x2022;
+        {{ job.applicants && (job.applicants.length || 0) }} Applicants
       </div>
     </div>
   </div>
   <!-- svg and button -->
   <div class="flex flex-col gap-2 items-center justify-center">
     <button
-      routerLink="/apply-job"
-      class="rounded px-6 py-1 text-[#ffbd20] bg-[#ffbd2033] hover:bg-[#ffbd204d] transition"
+      [routerLink]="['/apply-job', job.id]"
+      [disabled]="isApplied"
+      class="rounded px-6 py-1"
+      [ngClass]="{
+        'border border-[#20d140] text-[#20d140] bg-[#2f9e441a] hover:bg-[#2f9e4433]':
+          isApplied,
+        'text-[#ffbd20] bg-[#ffbd2033] hover:bg-[#ffbd204d] transition':
+          !isApplied
+      }"
     >
-      {{ edit() === true ? "Edit" : "Apply" }}
+      {{ edit() === true ? "Edit" : isApplied ? "Applied" : "Apply" }}
     </button>
     <!-- <img class="text-[#ffbd20]" src="assets/bookmark.svg" alt="" /> -->
     @if(!edit()){
@@ -65,7 +77,10 @@
       />
     </div>
     <div class="text-sm text-[#b0b0b0]">{{ card.name }}</div>
-    <div class="font-semibold">{{ card.value }}</div>
+    <div class="font-semibold">
+      {{ job ? job[card.id] : "NA" }}
+      {{ card.id == "packageOffered" ? "LPA" : "" }}
+    </div>
   </div>
   }
 </div>
@@ -78,7 +93,7 @@
   <div>
     <div class="flex flex-wrap gap-2">
       <!-- skill use for loop -->
-      @for(skill of skills;track $index){
+      @for(skill of job.skillsRequired;track $index){
       <div
         class="bg-[#ffd149]/15 text-[#ffbd20] rounded-3xl px-3 py-1 font-medium"
       >
@@ -94,8 +109,10 @@
 <!-- Job Description -->
 <div
   class="[&_h4]:text-xl [&_*]:text-[#b0b0b0] [&_h4]:font-semibold [&_h4]:text-[#d1d1d1] [&_h4]:my-5 [&_p]:text-justify [&_ul]:list-disc [&_li]:ml-4 [&_li]:marker:text-[#ffbd20] [&_li]:mb-1"
-  [innerHTML]="desc"
-></div>
+  [innerHTML]="job.description"
+>
+  {{ job.description }}
+</div>
 
 <hr class="border border-[#474643] mt-6 mb-6" />
 
@@ -106,17 +123,21 @@
     <!-- image and profile-->
     <div class="flex items-center gap-2">
       <div class="p-3 bg-[#454545] rounded-xl">
-        <img class="h-8 w-8" [src]="`assets/Icons/Google.png`" alt="company" />
+        <img
+          class="h-8 w-8"
+          [src]="`assets/Icons/${job.company}.png`"
+          alt="company"
+        />
       </div>
       <div class="flex flex-col gap-1">
-        <div class="font-medium text-2xl">Google</div>
+        <div class="font-medium text-2xl">{{ job.company }}</div>
         <div class="text-[#b0b0b0] text-xs">10k+ Employees</div>
       </div>
     </div>
     <!-- button -->
     <div class="flex flex-col gap-2 items-center justify-center">
       <button
-        routerLink="/company"
+        [routerLink]="['/company', job.company]"
         class="rounded px-4 py-2 text-[#ffbd20] bg-[#ffbd2033] hover:bg-[#ffbd204d] transition"
       >
         Company Page

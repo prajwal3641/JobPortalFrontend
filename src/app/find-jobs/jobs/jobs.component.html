@@ -6,7 +6,10 @@
   </div>
 
   <!-- displaying the jobs -->
-  <div class="flex flex-wrap gap-5 mt-10 justify-around">
+  @if(jobsData && jobsData.length === 0) {
+  <div class="text-center text-gray-500 mt-10">No jobs found.</div>
+  }
+  <div class="flex flex-wrap gap-5 mt-10 justify-start">
     @for(job of jobsData;track $index){
     <app-job-card [job]="job" />
     }

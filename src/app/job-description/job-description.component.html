@@ -12,11 +12,13 @@
   <div class="flex mt-4 gap-5 justify-around text-[#d1d1d1]">
     <!-- 2/3 section JOb description -->
     <div class="w-2/3">
-      <app-job-description-overview />
+      <app-job-description-overview [job]="job" />
     </div>
     <!-- recommended jobs -->
     <div class="">
-      <app-recommended-jobs />
+      <app-recommended-jobs [jobId]="jobId" />
     </div>
   </div>
 </div>
+
+<app-loading-overlay [show]="showOverlay" />

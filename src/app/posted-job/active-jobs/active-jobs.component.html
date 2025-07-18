@@ -1,5 +1,7 @@
-<div class="flex flex-col gap-4">
-  @for(job of jobs();track $index){
+<div
+  class="custom-scrollbar flex flex-col gap-4 m-auto max-h-[100vh] overflow-y-auto pr-2"
+>
+  @for(job of getJobs; track $index) {
   <app-posted-job-card [job]="job" />
   }
 </div>

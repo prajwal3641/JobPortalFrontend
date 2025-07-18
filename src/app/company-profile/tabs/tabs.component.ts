@@ -14,6 +14,13 @@ export class TabsComponent {
   // ✅ Optional component inputs: { about: {...}, jobs: {...} }
   @Input() componentInputs: Record<string, any> = {};
 
+  ngOnInit() {
+    // console.log('Tabs Component Initialized');
+    // console.log('Titles:', this.titles);
+    // console.log('Components:', this.components);
+    // console.log('Component Inputs:', this.componentInputs);
+  }
+
   activeTab = signal(0);
 
   setTab(index: number) {

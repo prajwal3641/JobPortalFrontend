@@ -1,1 +1,128 @@
-<p>posted-job-description works!</p>
+<!-- title section -->
+<div class="flex justify-between">
+  <!-- image and profile-->
+  <div class="flex items-center gap-2">
+    <div class="p-3 bg-[#454545] rounded-xl">
+      <img
+        class="h-14 w-14"
+        [src]="`assets/Icons/${job?.company}.png`"
+        alt="company"
+      />
+    </div>
+    <div class="flex flex-col gap-1">
+      <div class="font-semibold text-2xl">{{ job?.jobTitle }}</div>
+      <div class="text-[#b0b0b0] text-lg">
+        {{ job?.company }} &bull; {{ getTime }} &#x2022;
+        {{ job?.applicants && (job?.applicants?.length || 0) }} Applicants
+      </div>
+    </div>
+  </div>
+  <!-- svg and button -->
+  <div class="flex flex-col gap-2 items-center justify-center">
+    <button
+      [routerLink]="['/apply-job', job?.id]"
+      class="rounded border text-[#ffbd20] bg-[#ffbd2033] hover:bg-[#ffbd204d] transition px-7 py-1"
+    >
+      Edit
+    </button>
+    <!-- <img class="text-[#ffbd20]" src="assets/bookmark.svg" alt="" /> -->
+
+    <button
+      routerLink=""
+      class="rounded px-4 py-1 text-red-500 bg-[#2d2d2d] border hover:bg-[#b46b684d] transition"
+    >
+      Delete
+    </button>
+  </div>
+</div>
+
+<hr class="border border-[#474643] mt-6 mb-6" />
+
+<!-- displaying other info -->
+<div class="flex justify-between">
+  <!-- action icon -->
+  @for(card of cards;track $index){
+  <div class="flex flex-col items-center gap-1">
+    <div class="rounded-full bg-[#3d3d3d] p-2">
+      <img
+        width="24"
+        height="24"
+        [src]="`${card.icon}
+              `"
+        alt="marker"
+      />
+    </div>
+    <div class="text-sm text-[#b0b0b0]">{{ card.name }}</div>
+    <div class="font-semibold">
+      {{ job ? job[card.id] : "NA" }}
+      {{ card.id == "packageOffered" ? "LPA" : "" }}
+    </div>
+  </div>
+  }
+</div>
+
+<hr class="border border-[#474643] mt-6 mb-6" />
+
+<!-- required skilss  -->
+<div>
+  <div class="text-xl font-semibold mb-5">Required Skills</div>
+  <div>
+    <div class="flex flex-wrap gap-2">
+      <!-- skill use for loop -->
+      @for(skill of job?.skillsRequired;track $index){
+      <div
+        class="bg-[#ffd149]/15 text-[#ffbd20] rounded-3xl px-3 py-1 font-medium"
+      >
+        {{ skill }}
+      </div>
+      }
+    </div>
+  </div>
+</div>
+
+<hr class="border border-[#474643] mt-6 mb-6" />
+
+<!-- Job Description -->
+<div
+  class="[&_h4]:text-xl [&_*]:text-[#b0b0b0] [&_h4]:font-semibold [&_h4]:text-[#d1d1d1] [&_h4]:my-5 [&_p]:text-justify [&_ul]:list-disc [&_li]:ml-4 [&_li]:marker:text-[#ffbd20] [&_li]:mb-1"
+  [innerHTML]="job?.description"
+>
+  {{ job?.about }}
+</div>
+
+<hr class="border border-[#474643] mt-6 mb-6" />
+
+<!-- company info card -->
+<div>
+  <div class="text-xl font-semibold mb-5">About Company</div>
+  <div class="flex justify-between mb-4">
+    <!-- image and profile-->
+    <div class="flex items-center gap-2">
+      <div class="p-3 bg-[#454545] rounded-xl">
+        <img
+          class="h-8 w-8"
+          [src]="`assets/Icons/${job?.company}.png`"
+          alt="company"
+        />
+      </div>
+      <div class="flex flex-col gap-1">
+        <div class="font-medium text-2xl">{{ job?.company }}</div>
+        <div class="text-[#b0b0b0] text-xs">10k+ Employees</div>
+      </div>
+    </div>
+    <!-- button -->
+    <div class="flex flex-col gap-2 items-center justify-center">
+      <button
+        [routerLink]="['/company', job?.company]"
+        class="rounded px-4 py-2 text-[#ffbd20] bg-[#ffbd2033] hover:bg-[#ffbd204d] transition"
+      >
+        Company Page
+      </button>
+    </div>
+  </div>
+  <div class="text-justify">
+    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ex, amet.
+    Repellendus temporibus dolor reiciendis ad veritatis, in odit nulla
+    aspernatur possimus minus eum assumenda voluptate nobis sapiente atque!
+  </div>
+</div>

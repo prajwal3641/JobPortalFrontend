@@ -6,6 +6,8 @@ import {
   HostListener,
   ElementRef,
   AfterViewChecked,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -29,6 +31,8 @@ export class DropdownSearchInputComponent implements AfterViewChecked {
   };
 
   @Input() required = false;
+  @Input({ required: false }) value!: string;
+  @Output() valueChange = new EventEmitter<string>();
 
   dropdownOpen = signal(false);
   search = signal('');
@@ -52,7 +56,16 @@ export class DropdownSearchInputComponent implements AfterViewChecked {
   selectOption(option: string) {
     this.selected.set(option);
     this.search.set(option);
+    this.valueChange.emit(option);
     this.closeDropdown();
+  }
+
+  modelChange(value: string) {
+    if (value === '') {
+      this.valueChange.emit('');
+    }
+    this.search.set(value);
+    this.highlightedIndex.set(-1);
   }
 
   filteredOptions = computed(() =>

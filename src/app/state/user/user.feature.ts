@@ -5,7 +5,7 @@ import { LocalStorageService } from '../../Services/local-storage.service';
 
 // The shape of your user data
 export interface UserProfile {
-  id: string;
+  id: number;
   name: string;
   email: string;
   accountType: string;

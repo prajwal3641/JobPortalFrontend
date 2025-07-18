@@ -1,0 +1,137 @@
+<app-loading-overlay [show]="showOverlay()" />
+<div class="font-['poppins'] bg-[#2d2d2d] text-[#d1d1d1]">
+  <!-- submit your application  -->
+  <div class="text-xl font-semibold mb-5">Submit Your Application</div>
+
+  <!-- take inputs -->
+  <div class="flex flex-col gap-2">
+    <div
+      class="flex gap-10 [&>*]:w-1/2"
+      [class]="{
+        'mb-2': preview(),
+      }"
+    >
+      <div>
+        <app-input-field
+          label="Full Name"
+          placeholder="Enter Name"
+          [required]="true"
+          [readOnly]="preview()"
+          [(value)]="form.name"
+          (valueChange)="validateOnChange('name')"
+        />
+        <div *ngIf="formError['name']" class="text-red-500 text-xs mt-1">
+          {{ formError["name"] }}
+        </div>
+      </div>
+      <div>
+        <app-input-field
+          label="Email"
+          type="email"
+          placeholder="Enter Email"
+          [required]="true"
+          [readOnly]="preview()"
+          [(value)]="form.email"
+          (valueChange)="validateOnChange('email')"
+        />
+        <div *ngIf="formError['email']" class="text-red-500 text-xs mt-1">
+          {{ formError["email"] }}
+        </div>
+      </div>
+    </div>
+    <div
+      class="flex gap-10 [&>*]:w-1/2"
+      [class]="{
+        'mb-2': preview(),
+      }"
+    >
+      <div>
+        <app-input-field
+          label="Phone Number"
+          placeholder="Enter Phone Number"
+          [required]="true"
+          [min]="0"
+          [max]="9999999999"
+          type="number"
+          [readOnly]="preview()"
+          [(value)]="form.phone"
+          (valueChange)="validateOnChange('phone')"
+        />
+        <div *ngIf="formError['phone']" class="text-red-500 text-xs mt-1">
+          {{ formError["phone"] }}
+        </div>
+      </div>
+      <div>
+        <app-input-field
+          label="Personal Website"
+          type="url"
+          placeholder="Enter Url"
+          [required]="true"
+          [readOnly]="preview()"
+          [(value)]="form.website"
+          (valueChange)="validateOnChange('website')"
+        />
+        <div *ngIf="formError['website']" class="text-red-500 text-xs mt-1">
+          {{ formError["website"] }}
+        </div>
+      </div>
+    </div>
+    <app-input-field
+      [class.mb-2]="preview()"
+      label="Attach your CV"
+      type="file"
+      accept="application/pdf"
+      placeholder="Attach your CV"
+      [required]="true"
+      [readOnly]="preview()"
+      [(value)]="form.resume"
+      (valueChange)="validateOnChange('resume')"
+    />
+    <div *ngIf="formError['resume']" class="text-red-500 text-xs mt-1">
+      {{ formError["resume"] }}
+    </div>
+    <app-input-field
+      label="Cover Letter"
+      type="textarea"
+      [minRows]="4"
+      placeholder="Type something about yourself...."
+      [readOnly]="preview()"
+      [(value)]="form.coverLetter"
+    />
+
+    <!-- preview button -->
+    @if(!preview()){
+    <button
+      (click)="togglePreview()"
+      class="rounded px-4 py-2 text-[#ffbd20] bg-[#ffbd2033] hover:bg-[#ffbd204d] transition"
+    >
+      Preview
+    </button>
+    }@else {
+    <!-- edit and submit button -->
+    <div class="flex gap-10 [&>*]:w-1/2">
+      <button
+        (click)="togglePreview()"
+        class="w-full px-4 py-2 rounded bg-[#3d3d3d] text-[#ffd149] border border-[#ffbd20] hover:bg-[#ffbd20] hover:text-white transition duration-200"
+      >
+        Edit
+      </button>
+      <button
+        (click)="handleSubmit()"
+        class="w-full rounded px-4 py-2 text-[#ffbd20] bg-[#ffbd2033] hover:bg-[#ffbd204d] transition"
+      >
+        Submit
+      </button>
+    </div>
+    }
+  </div>
+</div>
+@if(notification.show){
+<app-notification
+  [(show)]="notification.show"
+  [message]="notification.message"
+  [type]="notification.type"
+  [title]="notification.title"
+  [time]="notification.time"
+/>
+}
