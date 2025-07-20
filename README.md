@@ -1,59 +1,69 @@
-# JobPortalFrontend
+# Job Portal Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.15.
+This is the frontend for a modern, feature-rich job portal application built with Angular. It provides a seamless and intuitive user experience for both job seekers and employers.
 
-## Development server
+## 🚀 Features
 
-To start a local development server, run:
+*   **User Authentication:** Secure user registration and login functionality.
+*   **Job Search:** Advanced job search and filtering capabilities.
+*   **Company Profiles:** Detailed company profiles with job listings.
+*   **Talent Search:** Recruiters can search for and view candidate profiles.
+*   **Job Application:** Easy-to-use job application process.
+*   **Profile Management:** Users can create and manage their profiles, including work experience and certifications.
+*   **Job Posting:** Employers can post and manage job listings.
 
-```bash
-ng serve
-```
+## 💻 Tech Stack
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+*   **Angular:** A powerful and modern framework for building single-page applications.
+*   **TypeScript:** A statically typed superset of JavaScript that enhances code quality and maintainability.
+*   **NgRx:** A state management library for Angular applications, providing a predictable state container.
+*   **Tailwind CSS:** A utility-first CSS framework for rapid UI development.
+*   **Angular Material:** A UI component library for Angular that follows the Material Design guidelines.
+*   **RxJS:** A library for reactive programming using Observables, making it easier to compose asynchronous or callback-based code.
 
-## Code scaffolding
+## ⚙️ Installation
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/your-username/job-portal-frontend.git
+    cd job-portal-frontend
+    ```
 
-```bash
-ng generate component component-name
-```
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## ▶️ Running the Application
 
-```bash
-ng generate --help
-```
+1.  **Start the development server:**
+    ```bash
+    npm start
+    ```
+2.  Open your browser and navigate to `http://localhost:4200/`.
 
-## Building
+## 🛠️ Building for Production
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+To create a production build, run the following command:
 
 ```bash
-ng e2e
+npm run build
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+The build artifacts will be stored in the `dist/` directory.
 
-## Additional Resources
+## ✅ Running Tests
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+To run the unit tests, use the following command:
+
+```bash
+npm run test
+```
+
+## 🤝 Contributing
+
+Contributions are welcome! If you have any ideas, suggestions, or bug reports, please open an issue or submit a pull request.
+
+## 📄 License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
