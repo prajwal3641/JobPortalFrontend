@@ -7,9 +7,19 @@
       alt="banner image"
     />
     <img
-      class="absolute -bottom-14 left-3 h-48 w-48 border-8 border-[#2d2d2d] rounded-full"
-      src="assets/avatar.png"
-      alt="banner image"
+      class="absolute -bottom-14 left-3 h-48 w-48 border-8 border-[#2d2d2d] rounded-full object-cover"
+      *ngIf="profile() && profile().profileImage"
+      [src]="
+        profile().profileImage
+          ? 'data:image/jpeg;base64,' + profile().profileImage
+          : 'assets/avatar1.png'
+      "
+    />
+    <img
+      class="absolute -bottom-14 left-3 h-48 w-48 border-8 border-[#2d2d2d] rounded-full object-cover"
+      *ngIf="!profile() || !profile().profileImage"
+      src="assets/avatar1.png"
+      alt="Default Avatar"
     />
   </div>
 
@@ -28,7 +38,7 @@
       </div>
     </div>
     <div class="text-xl">
-      {{ profile().role }} &bull; {{ profile().company }}
+      {{ profile().jobTitle }} &bull; {{ profile().company }}
     </div>
     <div>
       <span class="flex items-center gap-1 text-[#888888] text-md">
@@ -97,7 +107,7 @@
   <div class="px-3">
     <div class="text-2xl font-semibold mb-5 text-[#d1d1d1]">Certification</div>
     <div class="flex flex-col gap-8">
-      @for(certification of profile().certifications;track $index){
+      @for(certification of profile().certification;track $index){
       <app-certification-card [certification]="certification" />
       }
     </div>

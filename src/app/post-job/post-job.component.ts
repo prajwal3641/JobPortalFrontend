@@ -11,6 +11,8 @@ import { JobService } from '../Services/job.service';
 import { NotificationComponent } from '../shared/notification/notification.component';
 import { LoadingOverlayComponent } from '../shared/loading-overlay/loading-overlay.component';
 import { Applicant } from '../apply-job/apply-job-application-form/apply-job-application-form.component';
+import { Store } from '@ngrx/store';
+import { selectProfile } from '../state/user/user.feature';
 
 export interface Job {
   id: number;
@@ -26,12 +28,14 @@ export interface Job {
   description: string;
   skillsRequired: string[];
   status: JobStatus;
+  postedBy: number; // who posted the jobs
   [key: string]: any;
 }
 export enum ApplicationStatus {
   APPLIED = 'APPLIED',
   INTERVIEWING = 'INTERVIEWING',
   OFFERED = 'OFFERED',
+  REJECTED = 'REJECTED',
 }
 
 export enum JobStatus {
@@ -55,7 +59,11 @@ export enum JobStatus {
   styleUrl: './post-job.component.css',
 })
 export class PostJobComponent {
-  constructor(private router: Router, private jobService: JobService) {}
+  constructor(
+    private router: Router,
+    private store: Store,
+    private jobService: JobService
+  ) {}
   dropDownSearchData = fields;
   showOverlay = false;
 
@@ -75,6 +83,7 @@ export class PostJobComponent {
     description: '',
     skillsRequired: [],
     status: JobStatus.OPEN,
+    postedBy: 0, // Assuming you will set this to the current user's ID
   };
 
   touched: { [key: string]: boolean } = {
@@ -209,6 +218,7 @@ export class PostJobComponent {
     if (draft) {
       console.log('Saving as draft:', this.form);
       this.form.status = JobStatus.DRAFT;
+      this.form.postedBy = this.store.selectSignal(selectProfile)()?.id || 0; // Set postedBy to current user's ID
 
       this.saveJob();
     } else {
@@ -229,6 +239,8 @@ export class PostJobComponent {
       // Here you would make API call to submit the job
       this.form.status = JobStatus.OPEN;
       this.submitted = true;
+      this.form.postedBy = this.store.selectSignal(selectProfile)()?.id || 0; // Set postedBy to current user's ID
+
       this.saveJob();
     }
   }
@@ -245,14 +257,14 @@ export class PostJobComponent {
 
         console.log('Job posted successfully:', response);
         this.triggerNotification(
-          'Job Posted Successfully',
+          `Job ${this.submitted ? 'Submitted' : 'Drafted'} Successfully`,
           'Your job has been posted successfully.',
           'success',
           3000
         );
         setTimeout(() => {
           this.showOverlay = false;
-          this.router.navigate(['/posted-job']);
+          this.router.navigate(['/posted-job', response.id]);
         }, 3000);
         // this.router.navigate(['/']);
       },
@@ -285,6 +297,7 @@ export class PostJobComponent {
       description: '',
       skillsRequired: [],
       status: JobStatus.DRAFT,
+      postedBy: 0, // Reset postedBy to 0 or current user's ID
     };
   }
 

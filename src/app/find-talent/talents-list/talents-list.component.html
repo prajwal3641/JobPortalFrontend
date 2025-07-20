@@ -1,9 +1,11 @@
-<div class="flex flex-wrap gap-5 mt-10 justify-around">
-  @for(talent of talentsData;track $index){
+<div class="flex flex-wrap gap-5 mt-10 justify-start">
+  @for(applicant of getTalents;track $index){
   <app-talent-card
-    [talent]="talent"
+    [applicant]="applicant"
     [posted]="posted()"
     [invited]="invited()"
+    [offered]="offered()"
+    [rejected]="rejected()"
   />
   }
 </div>

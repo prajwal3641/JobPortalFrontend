@@ -26,6 +26,7 @@ export interface Applicant {
   resume: string | null;
   coverLetter: string;
   status: ApplicationStatus;
+  interviewTime?: Date | null; // Optional for interview scheduling
 }
 
 @Component({

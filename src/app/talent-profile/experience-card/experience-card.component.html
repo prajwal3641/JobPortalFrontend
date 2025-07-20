@@ -19,7 +19,8 @@
 
     <!-- dates -->
     <div class="text-sm text-[#b0b0b0]">
-      {{ experience().startDate }} - {{ experience().endDate }}
+      {{ experience().startDate | date : "MMMM yyyy" }} -
+      {{ experience().endDate | date : "MMMM yyyy" }}
     </div>
   </div>
   <!-- experience  -->

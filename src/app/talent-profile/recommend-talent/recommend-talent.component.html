@@ -5,7 +5,7 @@
   <div>
     <div class="flex flex-col flex-wrap gap-5 mt-5">
       @for(talent of recommended();track $index){
-      <app-talent-card [talent]="talent" />
+      <app-t-cards [profile]="talent" />
       }
     </div>
   </div>

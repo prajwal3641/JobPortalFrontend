@@ -48,7 +48,7 @@
     <!-- name and edit and save icon -->
     <div class="flex justify-between items-center">
       <div *ngIf="profile; else notProfile" class="text-3xl font-semibold">
-        {{ profile.email.split("@")[0] }}
+        {{ profile.name }}
       </div>
       <ng-template #notProfile>
         <div class="text-3xl font-semibold">Profile</div>

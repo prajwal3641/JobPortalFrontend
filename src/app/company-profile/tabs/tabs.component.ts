@@ -1,4 +1,4 @@
-import { Component, Input, Type, computed, signal } from '@angular/core';
+import { Component, Input, Type, computed, input, signal } from '@angular/core';
 import { NgComponentOutlet, NgClass, NgFor, NgIf } from '@angular/common';
 
 @Component({
@@ -19,12 +19,18 @@ export class TabsComponent {
     // console.log('Titles:', this.titles);
     // console.log('Components:', this.components);
     // console.log('Component Inputs:', this.componentInputs);
+    this.setTab(this.activeTabIndex());
+    // console.log('Active Tab Index:', this.activeTabIndex);
   }
 
-  activeTab = signal(0);
+  @Input() set activeTabIndexInput(value: number) {
+    this.activeTabIndex.set(value);
+  }
+  activeTabIndex = signal(0);
+  activeTab = computed(() => this.activeTabIndex());
 
   setTab(index: number) {
-    this.activeTab.set(index);
+    this.activeTabIndex.set(index);
   }
 
   formatTitle(title: string): string {

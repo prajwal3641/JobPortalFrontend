@@ -26,4 +26,14 @@ export class ProfileService {
       })
     );
   }
+
+  getAllProfiles() {
+    return this.httpClient
+      .get<Profile[]>(this.base_url + 'getAllProfiles')
+      .pipe(
+        catchError((err) => {
+          return throwError(() => err);
+        })
+      );
+  }
 }

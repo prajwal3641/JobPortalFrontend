@@ -36,11 +36,15 @@ export const routes: Routes = [
     component: PostJobComponent,
   },
   {
-    path: 'posted-job',
+    path: 'posted-job/:id',
     component: PostedJobComponent,
   },
   {
-    path: 'talent-profile/:userName',
+    path: 'posted-job',
+    redirectTo: 'posted-job/0',
+  },
+  {
+    path: 'talent-profile/:id',
     component: TalentProfileComponent,
   },
   {

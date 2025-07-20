@@ -1,11 +1,12 @@
 import { Component, computed, input, signal, Signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ProfileComponent } from './profile/profile.component';
-import { profiles, talents } from '../Data/TalentData';
-import { TalentProfile } from './profile/profile.model';
+
 import { RecommendTalentComponent } from './recommend-talent/recommend-talent.component';
-import { Talent } from '../find-talent/talent-card/talent.model';
-import { TalentsComponent } from '../find-talent/talents/talents.component';
+
+import { ProfileService } from '../Services/profile.service';
+import { Profile } from '../state/profile/profile.feature';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-talent-profile',
@@ -14,62 +15,85 @@ import { TalentsComponent } from '../find-talent/talents/talents.component';
   styleUrl: './talent-profile.component.css',
 })
 export class TalentProfileComponent {
-  allProfiles = signal<TalentProfile[]>(profiles);
-  allTalents = signal<Talent[]>(talents);
+  allProfiles = signal<Profile[]>([]);
 
-  userName = input.required<string>();
+  profile!: Profile;
+  id = input.required<number>();
 
-  data = computed(() => {
-    return this.allProfiles().find(
-      (profile) => profile.name === this.userName()
-    )!;
-  });
+  // data = computed(() => {
+  //   return this.allProfiles().find(
+  //     (profile) => profile.name === this.userName()
+  //   )!;
+  // });
 
-  recommended = computed(() => {
-    return this.recommendedTalents(this.data, this.allProfiles);
-  });
+  // recommended = computed(() => {
+  //   return this.recommendedTalents(this.data, this.allProfiles);
+  // });
 
-  ngOnInit() {
-    // console.log(this.data());
-    // console.log(this.recommended);
+  constructor(
+    private profileService: ProfileService,
+    private location: Location
+  ) {}
+
+  ngOnChanges() {
+    this.profileService.getProfile(this.id()).subscribe({
+      next: (profileData) => {
+        this.profile = profileData;
+      },
+      error: (error) => {
+        console.error('Error fetching profile:', error);
+      },
+    });
+    this.profileService.getAllProfiles().subscribe({
+      next: (profiles) => {
+        this.allProfiles.set(profiles);
+      },
+      error: (error) => {
+        console.error('Error fetching all profiles:', error);
+      },
+    });
   }
 
-  recommendedTalents(
-    profile: Signal<TalentProfile>,
-    profiles: Signal<TalentProfile[]>
-  ) {
-    const profileScores = profiles()
-      .map((p) => {
-        if (p.name === profile().name) return;
+  // recommendedTalents(
+  //   profile: Signal<TalentProfile>,
+  //   profiles: Signal<TalentProfile[]>
+  // ) {
+  //   const profileScores = profiles()
+  //     .map((p) => {
+  //       if (p.name === profile().name) return;
 
-        let currScore = 0;
+  //       let currScore = 0;
 
-        // skills
-        const skills = profile().skills.filter((skill) =>
-          p.skills.includes(skill)
-        ).length;
-        currScore += skills * 10;
+  //       // skills
+  //       const skills = profile().skills.filter((skill) =>
+  //         p.skills.includes(skill)
+  //       ).length;
+  //       currScore += skills * 10;
 
-        //  based on location
-        const location = profile().location === p.location ? 1 : 0;
-        currScore += location;
-        return { p, currScore };
-      })
-      .filter(
-        (item): item is { p: TalentProfile; currScore: number } =>
-          item !== undefined
-      )
-      .sort((a, b) => {
-        return b.currScore - a.currScore;
-      })
-      .map((p) => p.p);
+  //       //  based on location
+  //       const location = profile().location === p.location ? 1 : 0;
+  //       currScore += location;
+  //       return { p, currScore };
+  //     })
+  //     .filter(
+  //       (item): item is { p: TalentProfile; currScore: number } =>
+  //         item !== undefined
+  //     )
+  //     .sort((a, b) => {
+  //       return b.currScore - a.currScore;
+  //     })
+  //     .map((p) => p.p);
 
-    const recommendedTalent = profileScores.map((profile) => {
-      // use t["name"]
-      return this.allTalents().find((t) => profile.name === t.name)!;
-    });
-    // console.log(scores);
+  //   const recommendedTalent = profileScores.map((profile) => {
+  //     // use t["name"]
+  //     return this.allTalents().find((t) => profile.name === t.name)!;
+  //   });
+  //   // console.log(scores);
 
-    return recommendedTalent.slice(0, 4);
+  //   return recommendedTalent.slice(0, 4);
+  // }
+
+  goBack() {
+    this.location.back();
   }
 }

@@ -10,6 +10,7 @@ import {
 export interface Profile {
   id: number;
   email: string;
+  name: string;
   jobTitle: string;
   company: string;
   location: string;

@@ -54,8 +54,12 @@
     </div>
     <div class="text-sm text-[#b0b0b0]">{{ card.name }}</div>
     <div class="font-semibold">
-      {{ job ? job[card.id] : "NA" }}
-      {{ card.id == "packageOffered" ? "LPA" : "" }}
+      {{ job?.[card.id]  ? job?.[card.id] : "NA" }}
+      <ng-container
+        *ngIf="card.id == 'packageOffered' && job!.packageOffered > 0"
+      >
+        LPA
+      </ng-container>
     </div>
   </div>
   }
