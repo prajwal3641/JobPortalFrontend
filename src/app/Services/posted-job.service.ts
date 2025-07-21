@@ -25,6 +25,11 @@ export class PostedJobService {
     () => this.activeJob()?.applicants || []
   );
 
+  private activeTab = signal<number>(0); // Default to Active Jobs tab
+  setActiveTab(tabIndex: number) {
+    this.activeTab.set(tabIndex);
+  }
+  readonly activeTabIndex = computed(() => this.activeTab());
   constructor(private jobService: JobService, private store: Store) {
     this.fetchJobs();
 

@@ -1,9 +1,9 @@
 <div class="w-full mx-auto text-white">
   <!-- Tab Titles -->
-  <div class="flex gap-8 border-b border-[#555555] mb-6">
+  <div class="flex gap-8 flex-wrap border-b border-[#555555] mb-6">
     <button
       *ngFor="let title of titles; index as i"
-      class="text-lg font-semibold pb-2 px-2 transition-colors capitalize"
+      class="text-lg font-semibold py-1 transition-colors capitalize"
       [ngClass]="{
         'text-[#ffbd20] border-b-2 border-[#ffbd20]': i === activeTab(),
         'text-white': i !== activeTab()

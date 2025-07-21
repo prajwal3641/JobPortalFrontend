@@ -1,4 +1,4 @@
-import { Component, effect, Input } from '@angular/core';
+import { Component, effect, Input, signal } from '@angular/core';
 import { TabsComponent } from '../company-profile/tabs/tabs.component';
 import { PostedJobCardComponent } from './posted-job-card/posted-job-card.component';
 import { activeJobs, drafts } from '../Data/PostedJob';
@@ -23,11 +23,16 @@ import { of, switchMap } from 'rxjs';
   styleUrl: './posted-job.component.css',
 })
 export class PostedJobComponent {
-  id!: number;
-  tabComponents = [ActiveJobsComponent, ActiveJobsComponent];
+  id = signal<number>(0);
+  tabComponents = [
+    ActiveJobsComponent,
+    ActiveJobsComponent,
+    ActiveJobsComponent,
+  ];
   tabComponentsInputs = {
     Active: { id: this.id, active: true },
-    Drafts: { id: this.id, active: false },
+    Drafts: { id: this.id, draft: true },
+    Closed: { id: this.id, closed: true },
   };
 
   tabComponents2 = [
@@ -56,14 +61,15 @@ export class PostedJobComponent {
       .pipe(
         switchMap((params) => {
           const id = params.get('id');
-          this.id = id ? Number(id) : 0;
-          if (this.id !== 0) this.postedJobService.setActiveJobId(this.id);
+          this.id.set(id ? Number(id) : 0);
+          if (this.id() !== 0) this.postedJobService.setActiveJobId(this.id());
 
           // Update the tab inputs reactively
           this.tabComponentsInputs = {
             ...this.tabComponentsInputs,
             Active: { ...this.tabComponentsInputs.Active, id: this.id },
             Drafts: { ...this.tabComponentsInputs.Drafts, id: this.id },
+            Closed: { ...this.tabComponentsInputs.Closed, id: this.id },
           };
 
           return of(null); // just to complete the observable chain
@@ -72,14 +78,20 @@ export class PostedJobComponent {
       .subscribe();
   }
   constructor(
-    private postedJobService: PostedJobService,
+    public postedJobService: PostedJobService,
     private route: ActivatedRoute,
     private router: Router
   ) {
     effect(() => {
-      const jobs = this.postedJobService.jobs();
+      this.getStatus();
+      const jobs = this.postedJobService
+        .jobs()
+        .filter(
+          (jobs) =>
+            jobs.status === JobStatus.OPEN || jobs.status === JobStatus.DRAFT
+        );
       // If we are on the default route (id=0) and jobs have been loaded
-      if (this.id === 0 && jobs.length > 0) {
+      if (this.id() === 0 && jobs.length > 0) {
         const newId = jobs[0]?.id;
         if (newId) {
           // Navigate to the first job, replacing the URL to avoid bad history
@@ -90,7 +102,7 @@ export class PostedJobComponent {
   }
 
   get activeJob() {
-    const job = this.postedJobService.getJobById(this.id);
+    const job = this.postedJobService.getJobById(this.id());
     if (job) {
       return job;
     } else {
@@ -99,10 +111,19 @@ export class PostedJobComponent {
     }
   }
 
-  get getStatus() {
-    const job = this.postedJobService.getJobById(this.id);
-    if (!job) return 0;
-    return job.status === JobStatus.OPEN ? 0 : 1;
+  getStatus() {
+    const job = this.postedJobService.getJobById(this.id());
+
+    if (!job) {
+      this.postedJobService.setActiveTab(0);
+    }
+    if (job?.status === JobStatus.OPEN) {
+      this.postedJobService.setActiveTab(0);
+    } else if (job?.status === JobStatus.DRAFT) {
+      this.postedJobService.setActiveTab(1);
+    } else if (job?.status === JobStatus.CLOSED) {
+      this.postedJobService.setActiveTab(2);
+    }
   }
 
   get totalJobs() {

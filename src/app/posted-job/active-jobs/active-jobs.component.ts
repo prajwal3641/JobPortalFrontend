@@ -68,14 +68,18 @@ export class ActiveJobsComponent {
   }
 
   active = input<boolean>(true);
+  closed = input<boolean>(false);
+  draft = input<boolean>(false);
   id!: number;
 
   get getJobs() {
     this.jobsData = this.postedJobService.jobs();
     if (this.active()) {
       return this.jobsData.filter((job) => job.status === JobStatus.OPEN);
-    } else {
+    } else if (this.draft()) {
       return this.jobsData.filter((job) => job.status === JobStatus.DRAFT);
+    } else if (this.closed()) {
+      return this.jobsData.filter((job) => job.status === JobStatus.CLOSED);
     }
     return [];
   }

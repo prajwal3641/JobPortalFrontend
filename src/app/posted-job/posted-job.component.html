@@ -7,10 +7,10 @@
     <div class="w-1/5 mt-5">
       <div class="text-2xl font-semibold mb-5">Jobs [{{ totalJobs }}]</div>
       <!-- tabs !!!  -->
-      <div>
+      <div class="[&>div]:">
         <app-tabs
-          [activeTabIndexInput]="getStatus"
-          [titles]="['Active', 'Drafts']"
+          [activeTabIndexInput]="postedJobService.activeTabIndex()"
+          [titles]="['Active', 'Drafts', 'Closed']"
           [components]="tabComponents"
           [componentInputs]="tabComponentsInputs"
         />

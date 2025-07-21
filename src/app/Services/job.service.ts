@@ -73,4 +73,20 @@ export class JobService {
         })
       );
   }
+
+  updateJobStatus(id: any, status: 'OPEN' | 'CLOSED' | 'DRAFT') {
+    return this.httpClient
+      .patch<{ message: string }>(
+        this.base_url + `updateJobStatus/${id}`,
+        JSON.stringify(status),
+        {
+          headers: { 'Content-Type': 'application/json' },
+        }
+      )
+      .pipe(
+        catchError((err) => {
+          return throwError(() => err);
+        })
+      );
+  }
 }
